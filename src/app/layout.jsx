@@ -1,4 +1,5 @@
 import './globals.css';
+import RecoilRootProvider from '../util/recoilRootProvider';
 
 export const metadata = {
   title: 'OTTE',
@@ -8,7 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-      <body suppressHydrationWarning={true}>{children}</body>
+      <body suppressHydrationWarning={true}>
+        <RecoilRootProvider>{children}</RecoilRootProvider>
+      </body>
     </html>
   );
 }
