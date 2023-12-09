@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import SplashScreen from './_components/SplashScreen';
+import BaseTemplate from './templates/BaseTemplate';
 
 export default function Home() {
   const pathname = usePathname();
@@ -18,11 +19,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='relative flex min-h-screen flex-col justify-center overflow-hidde bg-gray-100'>
-      <div className='absolute inset-0'></div>
-      <div className='flex-1 h-full relative bg-white shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:min-w-[600px] overflow-hidden'>
-        {isHome && showSplash ? <SplashScreen /> : <>Carousel</>}
-      </div>
-    </div>
+    <BaseTemplate>
+      {isHome && showSplash ? <SplashScreen /> : <>Carousel</>}
+    </BaseTemplate>
   );
 }

@@ -1,3 +1,5 @@
+import BaseTemplate from './templates/BaseTemplate';
+
 export default function NotFound() {
-  return <div>Not Found 페이지</div>;
+  return <BaseTemplate>Not Found 페이지</BaseTemplate>;
 }
