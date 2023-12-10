@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <div>
       <div>HOME</div>
-      <div>
+      {/* <div>
         <Link
           href='/chat'
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
@@ -35,7 +35,7 @@ export default function Home() {
         >
           Mypage Button
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

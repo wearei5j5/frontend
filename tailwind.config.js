@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+// const colors = require('tailwindcss/colors');
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,6 +12,10 @@ module.exports = {
       600: '600px',
     },
     extend: {
+      colors: {
+        splash: '#501EE0',
+        typo: '#E9E9E9',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

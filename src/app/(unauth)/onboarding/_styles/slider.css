@@ -1,0 +1,22 @@
+.slick-initialized {
+  height: 100%;
+  flex: 1 1 0%;
+}
+
+.slick-slider > div {
+  height: 100%;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  height: 100%;
+}
+
+.slick-list > .slick-track > .slick-slide > div {
+  height: 100%;
+}
+
+.slick-list > .slick-track > .slick-slide img {
+  /* width: 100%;
+  height: auto; */
+}
