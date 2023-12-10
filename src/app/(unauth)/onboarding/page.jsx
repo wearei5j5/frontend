@@ -5,14 +5,15 @@ import Image from 'next/image';
 import Slider from 'react-slick';
 import Link from 'next/link';
 import SplashScreen from '@/app/_components/SplashScreen';
-import netflixIcon from '../../../../public/icon-netflix.svg';
-import tvingIcon from '../../../../public/icon-tving.svg';
-import disneyPlusIcon from '../../../../public/icon-disney-plus.svg';
-import coupangPlayIcon from '../../../../public/icon-coupang-play.svg';
-import watchaIcon from '../../../../public/icon-watcha.svg';
-import wavveIcon from '../../../../public/icon-wavve.svg';
-import appleTvIcon from '../../../../public/icon-apple-tv.svg';
-import seeznIcon from '../../../../public/icon-seezn.svg';
+import NetflixIcon from '@public/icon-netflix.svg';
+import TvingIcon from '@public/icon-tving.svg';
+import DisneyPlusIcon from '@public/icon-disney-plus.svg';
+import CoupangPlayIcon from '@public/icon-coupang-play.svg';
+import WatchaIcon from '@public/icon-watcha.svg';
+import WavveIcon from '@public/icon-wavve.svg';
+import AppleTvIcon from '@public/icon-apple-tv.svg';
+import SeeznIcon from '@public/icon-seezn.svg';
+import KakaoIcon from '@public/icon-kakaotalk.svg';
 
 import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
@@ -50,73 +51,18 @@ export default function OnBoarding() {
                 <div className='text-center'>OTT 통합</div>
                 <div className='h-full flex flex-col justify-center'>
                   <div className='flex justify-evenly'>
-                    <Image
-                      src={netflixIcon}
-                      width={86}
-                      height={58}
-                      alt='dummy img'
-                    />
-                    <Image
-                      src={tvingIcon}
-                      width={86}
-                      height={58}
-                      alt='dummy img'
-                    />
-                    <Image
-                      src={disneyPlusIcon}
-                      width={86}
-                      height={58}
-                      alt='dummy img'
-                    />
+                    <NetflixIcon />
+                    <TvingIcon />
+                    <DisneyPlusIcon />
                   </div>
                   <div className='flex justify-evenly'>
-                    <Image
-                      src={coupangPlayIcon}
-                      width={86}
-                      height={58}
-                      // style={{ width: '100%', height: 'auto' }}
-                      // unoptimized
-                      // className='object-cover'
-                      alt='dummy img'
-                    />
-                    <Image
-                      src={watchaIcon}
-                      width={86}
-                      height={58}
-                      // style={{ width: '100%', height: 'auto' }}
-                      // unoptimized
-                      // className='object-cover'
-                      alt='dummy img'
-                    />
-                    <Image
-                      src={wavveIcon}
-                      width={86}
-                      height={58}
-                      // style={{ width: '100%', height: 'auto' }}
-                      // unoptimized
-                      // className='object-cover'
-                      alt='dummy img'
-                    />
+                    <CoupangPlayIcon />
+                    <WatchaIcon />
+                    <WavveIcon />
                   </div>
                   <div className='flex justify-evenly'>
-                    <Image
-                      src={appleTvIcon}
-                      width={86}
-                      height={58}
-                      // style={{ width: '100%', height: 'auto' }}
-                      // unoptimized
-                      // className='object-cover'
-                      alt='dummy img'
-                    />
-                    <Image
-                      src={seeznIcon}
-                      width={86}
-                      height={58}
-                      // style={{ width: '100%', height: 'auto' }}
-                      // unoptimized
-                      // className='object-cover'
-                      alt='dummy img'
-                    />
+                    <AppleTvIcon />
+                    <SeeznIcon />
                   </div>
                 </div>
               </div>
@@ -178,25 +124,20 @@ export default function OnBoarding() {
             </div>
           </Slider> */}
           <div className='flex flex-col'>
-            <div className='mx-auto h-12 border-gray-600 mt-12'>
-              <Link
-                href='/login'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-              >
-                카카오톡으로 시작하기
-              </Link>
-            </div>
-            <div
-              className='mx-auto h-12 bo
-          rder-gray-600'
+            <Link
+              href='/login'
+              className='w-full bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative'
             >
-              <Link
-                href='/info'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-              >
-                로그인 없이 사용하기
-              </Link>
-            </div>
+              카카오톡으로 시작하기
+              <KakaoIcon className='absolute top-4 left-5' />
+            </Link>
+
+            <Link
+              href='/info'
+              className='w-full bg-btn rounded-lg text-white py-3.5 text-center mt-3 font-medium'
+            >
+              로그인 없이 사용하기
+            </Link>
           </div>
         </div>
       )}
