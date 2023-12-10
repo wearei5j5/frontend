@@ -13,10 +13,6 @@ import { useRef, useState, useEffect } from 'react';
 
 export default function Info() {
   const setIsFirst = useSetRecoilState(isFirstState);
-  // const [state, setState] = useState({
-  //   slideIndex: 0,
-  //   updateCount: 0,
-  // });
 
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -29,16 +25,6 @@ export default function Info() {
   const handlePrevButton = () => {
     sliderRef.current.slickPrev();
   };
-
-  // useEffect(() => {
-  //   if (sliderRef.current) {
-  //     sliderRef.current.slickGoTo(slideIndex);
-  //   }
-
-  //   return () => {
-  //     sliderRef.current = null;
-  //   };
-  // }, [state.slideIndex]);
 
   const settings = {
     dots: true,
