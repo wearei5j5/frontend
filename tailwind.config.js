@@ -14,7 +14,14 @@ module.exports = {
     extend: {
       colors: {
         splash: '#501EE0',
-        typo: '#E9E9E9',
+        g50: '#E9E9E9',
+        g75: '#A4A4A4',
+        g100: '#7E7E7E',
+        g200: '#474747',
+        g300: '#212121',
+        g400: '#171717',
+        g500: '#141414',
+        btn: '#501EE0',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
