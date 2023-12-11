@@ -28,6 +28,8 @@ module.exports = {
         v300: '#501EE0',
         v400: '#38159D',
         v500: '#311289',
+        'light-gray': '#F5F5F5',
+        b300: '#C8C8C8',
       },
       boxShadow: {
         square: '0 4px 10px rgba(0,0,0,0.1)',

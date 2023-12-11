@@ -86,43 +86,6 @@ export default function OnBoarding() {
               </div>
             </Slider>
           </div>
-
-          {/* <Slider {...settings}>
-            <div className='h-full min-h-full'>
-              <div className='flex-1'>
-                <Image
-                  src='https://dummyimage.com/200x300/cfcfcf/000000'
-                  width={0}
-                  height={0}
-                  style={{ width: '100%', height: 'auto' }}
-                  sizes='100vw'
-                  unoptimized
-                  className='object-cover'
-                  alt='dummy img'
-                />
-              </div>
-            </div>
-            <div className='h-full'>
-              <Image
-                src='https://dummyimage.com/200x300/cfcfcf/000000'
-                width={0}
-                height={0}
-                unoptimized
-                className='object-cover'
-                alt='dummy img'
-              />
-            </div>
-            <div className='h-full'>
-              <Image
-                src='https://dummyimage.com/200x300/cfcfcf/000000'
-                width={0}
-                height={0}
-                unoptimized
-                className='object-cover'
-                alt='dummy img'
-              />
-            </div>
-          </Slider> */}
           <div className='flex flex-col'>
             <Link
               href='/login'

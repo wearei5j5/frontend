@@ -2,6 +2,7 @@
 
 import { isFirstState } from '@/store/initInfo/atom';
 import Slider from 'react-slick';
+
 import ArrowLeftIcon from '@public/icon-arrow-left.svg';
 
 import Link from 'next/link';
@@ -21,6 +22,8 @@ import WatchaIcon from '@public/icon-watcha.svg';
 import WavveIcon from '@public/icon-wavve.svg';
 import AppleTvIcon from '@public/icon-apple-tv.svg';
 import SeeznIcon from '@public/icon-seezn.svg';
+
+import RcSlider from './_components/RcSlider';
 
 export default function Info() {
   const setIsFirst = useSetRecoilState(isFirstState);
@@ -69,6 +72,13 @@ export default function Info() {
 
   console.log(userInfo);
 
+  const handleChangeAge = (e) => {
+    setUserInfo((prev) => ({
+      ...prev,
+      age: e,
+    }));
+  };
+
   return (
     <div className='flex flex-col h-full'>
       <header className='px-4 py-2 sm:px-5'>
@@ -90,16 +100,9 @@ export default function Info() {
           ))}
         </div>
 
-        {/* <input
-          onChange={(e) => sliderRef.current.slickGoTo(e.target.value)}
-          value={slideIndex}
-          type='range'
-          min={0}
-          max={2}
-        /> */}
-        <div className='px-5 sm:px-6 flex flex-col justify-between h-[calc(100%-56px)]'>
+        <div className='flex flex-col justify-between h-[calc(100%-56px)] overflow-hidden'>
           <Slider {...settings} ref={sliderRef} className='flex-1'>
-            <div>
+            <div className='px-5 sm:px-6'>
               <div className='text-2xl font-bold text-g400 sm:mb-4 mb-3'>
                 뭐라고 불러드릴까요?
               </div>
@@ -118,13 +121,13 @@ export default function Info() {
                 />
               </div>
             </div>
-            <div>
+            <div className='px-5 sm:px-6'>
               <div className='text-2xl font-bold text-g400 sm:mb-3 mb-2'>
                 연령대를 선택해주세요
               </div>
               <div className='text-sm text-g100 mb-14'>나이를 입력해주세요</div>
               <div className='relative mb-6 range-slide'>
-                <div className='range-slide-count'>{userInfo.age}</div>
+                {/* <div className='range-slide-count'>{userInfo.age}</div>
                 <input
                   id='labels-range-input'
                   type='range'
@@ -138,43 +141,46 @@ export default function Info() {
                   min='0'
                   max='60'
                   className='w-full h-1.5 bg-v50 rounded-lg appearance-none cursor-pointer'
-                />
-                <span className='text-sm text-g100 absolute start-0 -bottom-6'>
-                  0
-                </span>
-                <span
-                  className='text-sm text-g100 absolute -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                  style={{ insetInlineStart: '17.66666667%' }}
-                >
-                  10
-                </span>
-                <span
-                  className='text-sm text-g100 absolute -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                  style={{ insetInlineStart: '34.33333334%' }}
-                >
-                  20
-                </span>
-                <span className='text-sm text-g100 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'>
-                  30
-                </span>
-                <span
-                  className='text-sm text-g100 absolute start-4/4 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                  style={{ insetInlineStart: '65.6666668%' }}
-                >
-                  40
-                </span>
-                <span
-                  className='text-sm text-g100 absolute start-5/6 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                  style={{ insetInlineStart: '82%' }}
-                >
-                  50
-                </span>
-                <span className='text-sm text-g100 absolute end-0 -bottom-6'>
-                  60
-                </span>
+                /> */}
+                <RcSlider value={userInfo.age} onChange={handleChangeAge} />
+                {/* <div className='mx-8'>
+                  <span className='text-sm text-g100 absolute start-0 -bottom-6'>
+                    0
+                  </span>
+                  <span
+                    className='text-sm text-g100 absolute -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
+                    style={{ insetInlineStart: '17.66666667%' }}
+                  >
+                    10
+                  </span>
+                  <span
+                    className='text-sm text-g100 absolute -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
+                    style={{ insetInlineStart: '34.33333334%' }}
+                  >
+                    20
+                  </span>
+                  <span className='text-sm text-g100 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'>
+                    30
+                  </span>
+                  <span
+                    className='text-sm text-g100 absolute start-4/4 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
+                    style={{ insetInlineStart: '65.6666668%' }}
+                  >
+                    40
+                  </span>
+                  <span
+                    className='text-sm text-g100 absolute start-5/6 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
+                    style={{ insetInlineStart: '82%' }}
+                  >
+                    50
+                  </span>
+                  <span className='text-sm text-g100 absolute end-0 -bottom-6'>
+                    60
+                  </span>
+                </div> */}
               </div>
             </div>
-            <div>
+            <div className='px-5 sm:px-6'>
               <div className='text-2xl font-bold text-g400 sm:mb-3 mb-2 break-keep'>
                 현재 구독중인 OTT서비스를 선택해주세요
               </div>
@@ -215,12 +221,19 @@ export default function Info() {
               </div>
             </div>
           </Slider>
-          <button
-            className='w-full bg-main rounded-lg text-white py-3.5'
-            onClick={handleNextButton}
-          >
-            {slideIndex === 2 ? '시작하기' : '다음'}
-          </button>
+          <div className='px-5 sm:px-6'>
+            <button
+              className='w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
+              onClick={handleNextButton}
+              disabled={
+                (slideIndex === 0 && userInfo.name === '') ||
+                (slideIndex === 1 && userInfo.age === 0) ||
+                (slideIndex === 2 && userInfo.ott.length === 0)
+              }
+            >
+              {slideIndex === 2 ? '시작하기' : '다음'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
