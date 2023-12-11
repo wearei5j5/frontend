@@ -21,7 +21,7 @@ module.exports = {
         g300: '#212121',
         g400: '#171717',
         g500: '#141414',
-        v50: '#EEE9FC',
+        v50: '#EEEAFA',
         v75: '#B7A3F2',
         v100: '#9A7DED',
         v200: '#6E44E5',
@@ -33,6 +33,7 @@ module.exports = {
       },
       boxShadow: {
         square: '0 4px 10px rgba(0,0,0,0.1)',
+        line: 'inset 0 0 0 2px #6E44E5, 0 4px 10px rgba(0,0,0,0.1)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

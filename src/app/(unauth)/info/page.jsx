@@ -40,6 +40,55 @@ export default function Info() {
 
   const sliderRef = useRef(null);
 
+  const ottServices = [
+    [
+      {
+        value: 'tving',
+        name: '티빙',
+        icon: <TvingIcon />,
+      },
+      {
+        value: 'netflix',
+        name: '넷플릭스',
+        icon: <NetflixIcon />,
+      },
+      {
+        value: 'coupang play',
+        name: '쿠팡플레이',
+        icon: <CoupangPlayIcon />,
+      },
+    ],
+    [
+      {
+        value: 'seezn',
+        name: '시즌',
+        icon: <SeeznIcon />,
+      },
+      {
+        value: 'disney plus',
+        name: '디즈니플러스',
+        icon: <DisneyPlusIcon />,
+      },
+      {
+        value: 'watcha',
+        name: '왓차',
+        icon: <WatchaIcon />,
+      },
+    ],
+    [
+      {
+        value: 'wavve',
+        name: '웨이브',
+        icon: <WavveIcon />,
+      },
+      {
+        value: 'apple tv',
+        name: '애플티비',
+        icon: <AppleTvIcon />,
+      },
+    ],
+  ];
+
   const handleNextButton = () => {
     if (slideIndex === 2) {
       setIsFirst(false);
@@ -78,6 +127,22 @@ export default function Info() {
       age: e,
     }));
   };
+
+  const handleClickOtt = (value) => {
+    if (userInfo.ott.includes(value)) {
+      const newItems = userInfo.ott.filter((item) => item !== value);
+      console.log('new ITEM', newItems);
+      setUserInfo((prev) => ({ ...prev, ott: newItems }));
+    } else {
+      // setSelectedDivs([...selectedDivs, id]);
+      setUserInfo((prev) => ({ ...prev, ott: [...prev.ott, value] }));
+    }
+  };
+
+  // const isSelected = ottServices
+  //   .flat()
+  //   .filter((item) => userInfo.ott.includes(item.value));
+  // console.log(isSelected);
 
   return (
     <div className='flex flex-col h-full'>
@@ -188,36 +253,29 @@ export default function Info() {
                 이 설정은 나중에 다시 수정할 수 있어요
               </div>
               <div className='flex flex-col sm:space-y-6 space-y-3'>
-                <div className='flex justify-center sm:space-x-6 space-x-3'>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <TvingIcon />
+                {ottServices.map((item, i) => (
+                  <div
+                    key={i}
+                    className='flex justify-center sm:space-x-6 space-x-3'
+                  >
+                    {item.map((ott) => (
+                      <div
+                        onClick={() => handleClickOtt(ott.value)}
+                        key={ott.value}
+                        className={`sm:w-32 w-[106px] sm:h-32 h-[106px] rounded-3xl  py-3 px-2.5 flex flex-col justify-center items-center   ${
+                          userInfo.ott.find((el) => el === ott.value)
+                            ? 'shadow-line bg-v50'
+                            : 'shadow-square'
+                        }`}
+                      >
+                        {ott.icon}
+                        <div className='text-g200 font-semibold text-sm mt-2'>
+                          {ott.name}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <NetflixIcon />
-                  </div>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <CoupangPlayIcon />
-                  </div>
-                </div>
-                <div className='flex justify-center sm:space-x-6 space-x-3'>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <SeeznIcon />
-                  </div>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <DisneyPlusIcon />
-                  </div>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <WatchaIcon />
-                  </div>
-                </div>
-                <div className='flex justify-center sm:space-x-6 space-x-3'>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <WavveIcon />
-                  </div>
-                  <div className='sm:w-28 w-24 sm:h-28 h-24 rounded-3xl shadow-square py-3 px-2.5 flex flex-col justify-center items-center'>
-                    <AppleTvIcon />
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </Slider>
