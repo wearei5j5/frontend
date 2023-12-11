@@ -134,7 +134,7 @@ export default function OnBoarding() {
 
             <Link
               href='/info'
-              className='w-full bg-btn rounded-lg text-white py-3.5 text-center mt-3 font-medium'
+              className='w-full bg-main rounded-lg text-white py-3.5 text-center mt-3 font-medium'
             >
               로그인 없이 사용하기
             </Link>

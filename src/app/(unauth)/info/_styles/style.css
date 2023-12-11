@@ -1,0 +1,84 @@
+.range-slide {
+}
+
+.range-slide-count {
+}
+
+.range-slide input[type='range'] {
+}
+
+.slick-list {
+  height: 100%;
+}
+
+/* .range-slide input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+} */
+
+/* .range-slide input::-webkit-progress-value {
+  background-color: red;
+}
+
+.range-slide input::-webkit-progress-bar {
+  background-color: red;
+}
+
+.range-slide input::-moz-range-progress {
+  background-color: red;
+} */
+
+input[type='range'] {
+  -webkit-appearance: none;
+  -moz-apperance: none;
+  border-radius: 6px;
+  height: 6px;
+
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(15%, #df7164),
+    color-stop(15%, #f5d0cc)
+  );
+
+  background-image: -moz-linear-gradient(
+    left center,
+    #df7164 0%,
+    #df7164 15%,
+    #f5d0cc 15%,
+    #f5d0cc 100%
+  );
+}
+
+input[type='range']::-moz-range-track {
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input[type='range']:focus {
+  outline: none;
+  border: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  background-color: #df7164;
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+}
+
+input[type='range']::-moz-range-thumb {
+  -moz-appearance: none !important;
+  background-color: #df7164;
+  border: none;
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+}
