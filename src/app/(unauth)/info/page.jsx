@@ -154,10 +154,10 @@ export default function Info() {
           {slideCount.map((item, i) => (
             <div
               key={i}
-              className='w-full bg-[#E2E2E2] rounded-full sm:h-2.5 h-2 mb-4'
+              className='w-full bg-[#E2E2E2] rounded-full sm:h-2 h-1.5 mb-4'
             >
               <div
-                className={`sm:h-2.5 h-2 rounded-full ${
+                className={`sm:h-2 h-1.5 rounded-full ${
                   item <= slideIndex ? 'bg-main' : 'bg-[#E2E2E2]'
                 }`}
               ></div>
@@ -249,7 +249,7 @@ export default function Info() {
               <div className='text-2xl font-bold text-g400 sm:mb-3 mb-2 break-keep'>
                 현재 구독중인 OTT서비스를 선택해주세요
               </div>
-              <div className='text-sm text-g100 mb-14'>
+              <div className='text-sm text-g100 mb-9'>
                 이 설정은 나중에 다시 수정할 수 있어요
               </div>
               <div className='flex flex-col sm:space-y-6 space-y-3'>
@@ -262,7 +262,7 @@ export default function Info() {
                       <div
                         onClick={() => handleClickOtt(ott.value)}
                         key={ott.value}
-                        className={`sm:w-32 w-[106px] sm:h-32 h-[106px] rounded-3xl  py-3 px-2.5 flex flex-col justify-center items-center   ${
+                        className={`sm:w-32 w-[102px] sm:h-32 h-[102px] rounded-3xl  py-3 px-2.5 flex flex-col justify-center items-center   ${
                           userInfo.ott.find((el) => el === ott.value)
                             ? 'shadow-line bg-v50'
                             : 'shadow-square'
