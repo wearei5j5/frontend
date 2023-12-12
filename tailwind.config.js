@@ -32,13 +32,23 @@ module.exports = {
         b300: '#C8C8C8',
       },
       boxShadow: {
-        square: '0 4px 10px rgba(0,0,0,0.1)',
+        square: '0 4px 12px rgba(0,0,0,0.1)',
         line: 'inset 0 0 0 2px #6E44E5, 0 4px 10px rgba(0,0,0,0.1)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'bg-home': "url('/bg-home.png')",
+      },
+      backgroundPosition: {
+        'bottom-4': 'center top',
+      },
+      blur: {
+        xs: '2px',
+      },
+      borderWidth: {
+        1: '1px',
       },
     },
   },

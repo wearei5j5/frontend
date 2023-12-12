@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import ArrowLeftIcon from '@public/icon-arrow-left.svg';
 
 import Link from 'next/link';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import './_styles/style.css';
 import 'slick-carousel/slick/slick.css';
@@ -24,6 +24,7 @@ import AppleTvIcon from '@public/icon-apple-tv.svg';
 import SeeznIcon from '@public/icon-seezn.svg';
 
 import RcSlider from './_components/RcSlider';
+import { userInfoState } from '@/store/userInfo/atom';
 
 export default function Info() {
   const setIsFirst = useSetRecoilState(isFirstState);
@@ -32,11 +33,7 @@ export default function Info() {
   const [slideCount, setSlideCount] = useState([0, 1, 2]);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    age: 0,
-    ott: [],
-  });
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const sliderRef = useRef(null);
 
@@ -192,64 +189,14 @@ export default function Info() {
               </div>
               <div className='text-sm text-g100 mb-14'>나이를 입력해주세요</div>
               <div className='relative mb-6 range-slide'>
-                {/* <div className='range-slide-count'>{userInfo.age}</div>
-                <input
-                  id='labels-range-input'
-                  type='range'
-                  value={userInfo.age}
-                  onChange={(e) =>
-                    setUserInfo((prev) => ({
-                      ...prev,
-                      age: Number(e.target.value),
-                    }))
-                  }
-                  min='0'
-                  max='60'
-                  className='w-full h-1.5 bg-v50 rounded-lg appearance-none cursor-pointer'
-                /> */}
                 <RcSlider value={userInfo.age} onChange={handleChangeAge} />
-                {/* <div className='mx-8'>
-                  <span className='text-sm text-g100 absolute start-0 -bottom-6'>
-                    0
-                  </span>
-                  <span
-                    className='text-sm text-g100 absolute -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                    style={{ insetInlineStart: '17.66666667%' }}
-                  >
-                    10
-                  </span>
-                  <span
-                    className='text-sm text-g100 absolute -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                    style={{ insetInlineStart: '34.33333334%' }}
-                  >
-                    20
-                  </span>
-                  <span className='text-sm text-g100 absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'>
-                    30
-                  </span>
-                  <span
-                    className='text-sm text-g100 absolute start-4/4 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                    style={{ insetInlineStart: '65.6666668%' }}
-                  >
-                    40
-                  </span>
-                  <span
-                    className='text-sm text-g100 absolute start-5/6 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6'
-                    style={{ insetInlineStart: '82%' }}
-                  >
-                    50
-                  </span>
-                  <span className='text-sm text-g100 absolute end-0 -bottom-6'>
-                    60
-                  </span>
-                </div> */}
               </div>
             </div>
             <div className='px-5 sm:px-6'>
               <div className='text-2xl font-bold text-g400 sm:mb-3 mb-2 break-keep'>
                 현재 구독중인 OTT서비스를 선택해주세요
               </div>
-              <div className='text-sm text-g100 mb-9'>
+              <div className='text-sm text-g100 mb-9 sm:mb-14'>
                 이 설정은 나중에 다시 수정할 수 있어요
               </div>
               <div className='flex flex-col sm:space-y-6 space-y-3'>
