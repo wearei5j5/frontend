@@ -65,7 +65,7 @@ export default function Chat() {
           대화 종료
         </Link>
       </header>
-      <div className='px-5 flex-1 flex flex-col items-center overflow-y-auto'>
+      <div className='px-5 grow-1 h-[calc(100%-120px)] flex flex-col items-center overflow-y-auto'>
         <div className='flex justify-center my-7'>
           <div className='bg-g75 text-center w-fit text-xs py-0.5 px-6 rounded-md text-white'>
             {today}
@@ -92,11 +92,11 @@ export default function Chat() {
             <ChatBubble message='오늘 하루는 어떠셨나요?' sender='ai' />
           </div>
         ) : (
-          <div className='w-full  border-2'>
-            {/* AI */}
+          <div className='w-full '>
             <div className='w-full flex-1'>
+              {/* AI */}
               <div className='flex justify-start'>
-                <div>
+                <div className='min-w-[40px]'>
                   <Image
                     src='/chat-character.png'
                     width={40}
@@ -104,7 +104,7 @@ export default function Chat() {
                     alt='character img'
                   />
                 </div>
-                <div className='ml-2'>
+                <div className='mx-2 flex-1'>
                   <div className='flex items-center'>
                     <div className='text-[#656565] text-sm'>이오지오</div>
                     <span className='ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block'>
@@ -116,29 +116,97 @@ export default function Chat() {
                     message={`${userInfo.name || '오태'}님 안녕하세요!`}
                   />
                   <ChatBubble sender='ai' message='오늘 하루는 어떠셨나요?' />
-                  <div className='flex space-x-1'>
-                    {feelings.map((item, i) => (
-                      <div
-                        key={i}
-                        onClick={() => handleClickFeeling(item.value)}
-                        className='bg-v200 rounded-2xl py-1.5 px-3 text-sm cursor-pointer'
-                      >
-                        {item.icon}
-                      </div>
-                    ))}
+                </div>
+              </div>
+
+              {/* USER */}
+              <div className='flex justify-end'>
+                <div className=''>
+                  <ChatBubble sender='user' message='행복한 하루였어!' />
+                </div>
+              </div>
+
+              {/* AI */}
+              <div className='flex justify-start'>
+                <div className='min-w-[40px]'>
+                  <Image
+                    src='/chat-character.png'
+                    width={40}
+                    height={40}
+                    alt='character img'
+                  />
+                </div>
+                <div className='mx-2 flex-1'>
+                  <div className='flex items-center'>
+                    <div className='text-[#656565] text-sm'>이오지오</div>
+                    <span className='ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block'>
+                      AI
+                    </span>
                   </div>
+                  <ChatBubble sender='ai' message='그랬군요!' />
+                  <ChatBubble
+                    sender='ai'
+                    message='오늘 같은 날 딱 맞는 영화로 하루를 마무리하면
+더 완벽한 하루가 될거에요!🍀'
+                  />
+                  <ChatBubble
+                    sender='ai'
+                    message='어떤 장르의 영화가 좋으세요?'
+                  />
+                </div>
+              </div>
+
+              {/* USER */}
+              <div className='flex justify-end'>
+                <div className=''>
+                  <ChatBubble sender='user' message='로맨스가 보고싶어!' />
+                </div>
+              </div>
+
+              {/* AI */}
+              <div className='flex justify-start'>
+                <div className='min-w-[40px]'>
+                  <Image
+                    src='/chat-character.png'
+                    width={40}
+                    height={40}
+                    alt='character img'
+                  />
+                </div>
+                <div className='mx-2 flex-1'>
+                  <div className='flex items-center'>
+                    <div className='text-[#656565] text-sm'>이오지오</div>
+                    <span className='ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block'>
+                      AI
+                    </span>
+                  </div>
+                  <ChatBubble sender='ai' message='역시 탁월한 선택입니다🕶️' />
+                  <ChatBubble sender='ai' message='마크업' />
+                  <ChatBubble sender='ai' message='결과가 맘에 드시나요?' />
                 </div>
               </div>
             </div>
-
-            {feeling !== null && (
-              <div className='flex justify-end'>
-                <ChatBubble sender='user' message='행복한 하루였어!' />
-              </div>
-            )}
           </div>
         )}
       </div>
+
+      <footer className='fixed w-full h-16 py-2 px-5 bg-white bottom-0'>
+        <div className='relative flex'>
+          <textarea
+            rows={1}
+            type='text'
+            className='bg-white border border-gray-300 text-gray-900 text-sm block w-full py-2 px-5 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block'
+            placeholder='메시지'
+            required
+          />
+          <button
+            type='submit'
+            className='text-white absolute end-2.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2'
+          >
+            전송
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }

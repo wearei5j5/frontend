@@ -70,6 +70,11 @@ export default function OnBoarding() {
                 <div className='slide-content-img relative h-full bg-bottom-4 bg-no-repeat bg-[url("/onboarding3.png")] bg-contain'></div>
               </div>
             </Slider>
+            {/* <Slider {...settings}>
+              <div>TEST1</div>
+              <div>TEST2</div>
+              <div>TEST3</div>
+            </Slider> */}
           </div>
           <div className='flex flex-col items-center'>
             <Link

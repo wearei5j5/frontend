@@ -216,9 +216,7 @@ export default function Info() {
                         }`}
                       >
                         {ott.icon}
-                        <div className='text-g200 font-semibold text-sm mt-2'>
-                          {ott.name}
-                        </div>
+                        <div className='text-g200 text-sm mt-2'>{ott.name}</div>
                       </div>
                     ))}
                   </div>

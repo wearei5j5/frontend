@@ -21,10 +21,10 @@
   height: auto; */
 }
 
-/* .slick-dots {
-  bottom: 10px !important;
-  border: 1px solid red;
+.slick-dots {
+  /* bottom: 10px !important; */
 }
+/*
 
 .slick-dots li {
   margin: 0 2px;
