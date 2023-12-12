@@ -1,7 +1,7 @@
 'use client';
 
 import { redirect } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRecoilValue } from 'recoil';
 import { isFirstState } from '@/store/initInfo/atom';
@@ -12,6 +12,7 @@ import MypageIcon from '@public/icon-mypage.svg';
 import Image from 'next/image';
 
 export default function Home() {
+  const [welcomeText, setWelcomeText] = useState('반가워요 저는 이오지오에요');
   const isFirst = useRecoilValue(isFirstState);
 
   useEffect(() => {
@@ -19,6 +20,14 @@ export default function Home() {
       redirect('/onboarding');
     }
   }, [isFirst]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWelcomeText('당신에게 딱 맞는 영화를 추천해줄게요!');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
@@ -35,9 +44,9 @@ export default function Home() {
           <div className='flex justify-center text-center text-g200 text-xl mb-6 sm:mb-10'>
             이오지오가 추천하는 <br /> 나만의 콘텐츠 보러가는 거, 오때?
           </div>
-          <div className='px-16 flex justify-center mb-4 sm:mb-8'>
+          <div className='px-8 flex justify-center mb-4 sm:mb-8'>
             <div className='shadow-square text-center py-4 px-10 rounded-xl text-sm text-g100 sm:w-[300px]'>
-              반가워요 저는 이오지오에요
+              {welcomeText}
             </div>
           </div>
           <div className='border-w border-main bg-bg-home bg-center w-full h-64 sm:h-96 bg-contain sm:bg-contain bg-no-repeat flex justify-center'>

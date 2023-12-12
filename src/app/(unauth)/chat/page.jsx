@@ -13,7 +13,7 @@ dayjs.locale('ko');
 export default function Chat() {
   const [showIntro, setShowIntro] = useState(true);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [feeling, setFeeling] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const today = dayjs(new Date()).format('YYYY년 MM월 DD일 (dd)');
 
@@ -25,32 +25,7 @@ export default function Chat() {
     return () => clearTimeout(timer);
   }, []);
 
-  const feelings = [
-    {
-      value: 'happy',
-      icon: '🥰',
-    },
-    {
-      value: 'funny',
-      icon: '😄',
-    },
-    {
-      value: 'soso',
-      icon: '😐',
-    },
-    {
-      value: 'sad',
-      icon: '😭',
-    },
-    {
-      value: 'angry',
-      icon: '😡',
-    },
-  ];
-
-  const handleClickFeeling = (val) => {
-    setFeeling(val);
-  };
+  console.log(open);
 
   return (
     <div className='flex flex-col h-full'>
@@ -72,7 +47,7 @@ export default function Chat() {
           </div>
         </div>
         {showIntro ? (
-          <div className='h-full w-full mb-4 flex-1 flex flex-col space-y-1.5 justify-center items-center'>
+          <div className='h-full w-full mb-10 flex-1 flex flex-col space-y-1.5 justify-center items-center'>
             <Image
               src='/chat-character.png'
               width={140}
@@ -181,7 +156,25 @@ export default function Chat() {
                     </span>
                   </div>
                   <ChatBubble sender='ai' message='역시 탁월한 선택입니다🕶️' />
-                  <ChatBubble sender='ai' message='마크업' />
+                  <ChatBubble sender='ai'>
+                    <div className='flex items-center justify-center space-x-1'>
+                      <Image
+                        src='/meditation-character.png'
+                        alt='character img'
+                        width={55}
+                        height={55}
+                      />
+                      <div className='font-medium break-keep sm:max-w-fit max-w-[112px]'>
+                        {userInfo.name}님에게 딱 맞는 영화 추천 결과
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setOpen(true)}
+                      className='w-full text-white bg-main hover:bg-v400 focus:outline-none font-medium rounded-lg text-sm py-2 mt-1 sm:mt-2'
+                    >
+                      보러가기
+                    </button>
+                  </ChatBubble>
                   <ChatBubble sender='ai' message='결과가 맘에 드시나요?' />
                 </div>
               </div>
@@ -190,23 +183,59 @@ export default function Chat() {
         )}
       </div>
 
-      <footer className='fixed w-full h-16 py-2 px-5 bg-white bottom-0'>
+      <footer className='fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px]'>
         <div className='relative flex'>
-          <textarea
-            rows={1}
+          <input
             type='text'
-            className='bg-white border border-gray-300 text-gray-900 text-sm block w-full py-2 px-5 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block'
-            placeholder='메시지'
+            className='bg-white border border-gray-300 text-gray-900 text-sm block w-full py-2 pl-5 pr-20 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block leading-7 placeholder:leading-7'
+            placeholder='이오지오에게 말해보세요'
             required
           />
           <button
             type='submit'
-            className='text-white absolute end-2.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2'
+            className='text-white absolute end-3 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2'
           >
             전송
           </button>
         </div>
       </footer>
+
+      {/* Modal */}
+      {open && (
+        <div className='modal bg-white pointer-events-none fixed w-full sm:max-w-[600px] h-full top-0 left-1/2 flex items-center justify-center z-10   -translate-x-1/2 '>
+          <div className='modal-overlay absolute w-full h-full bg-white'></div>
+
+          <div className='modal-container fixed w-full h-full z-50 overflow-y-auto '>
+            <div
+              onClick={() => setOpen(false)}
+              className='modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-black text-sm z-50'
+            >
+              (Esc)
+            </div>
+
+            {/* Add margin if you want to see grey behind the modal */}
+            <div className='modal-content container mx-auto h-auto text-left p-4'>
+              {/* Title */}
+              <div className='flex justify-between items-center pb-2'>
+                <p className='text-2xl font-bold'>Full Screen Modal!</p>
+              </div>
+
+              {/* Body */}
+              <p>Modal content can go here</p>
+
+              {/* Footer */}
+              <div className='flex justify-end pt-2'>
+                <button className='px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2'>
+                  Action
+                </button>
+                <button className='modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400'>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

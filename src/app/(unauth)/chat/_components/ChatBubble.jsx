@@ -9,7 +9,7 @@ export default function ChatBubble(props) {
             : 'bg-main text-white rounded-l-xl rounded-br-xl rounded-tr-sm '
         }`}
       >
-        <div>{props.message}</div>
+        {props.children ? props.children : <div>{props.message}</div>}
       </div>
     </div>
   );
