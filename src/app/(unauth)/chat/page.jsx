@@ -3,10 +3,10 @@
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatBubble from './_components/ChatBubble';
 import Link from 'next/link';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { userInfoState } from '@/store/userInfo/atom';
 import Modal from '@/app/_components/Modal';
 
@@ -28,6 +28,49 @@ const getMovieList = async (params) => {
   return response.json();
 };
 
+const MessageBubble = ({ speaker, message, isLoading }) => {
+  const userInfo = useRecoilValue(userInfoState);
+  const setOpen = useSetRecoilState(modalState);
+
+  if (isLoading) {
+    return (
+      <ChatBubble key={`${Math.random()}`} sender={speaker} message={'•••'} />
+    );
+  }
+
+  return message.map((text, index) =>
+    text === '' ? (
+      <div key={`${Math.random()}-${index}`}>
+        <ChatBubble sender={speaker}>
+          <div className='flex items-center justify-center space-x-1'>
+            <Image
+              src='/meditation-character.png'
+              alt='character img'
+              width={55}
+              height={55}
+            />
+            <div className='font-medium break-keep sm:max-w-fit max-w-[112px]'>
+              {userInfo.name}님에게 딱 맞는 영화 추천 결과
+            </div>
+          </div>
+          <button
+            onClick={() => setOpen(true)}
+            className='w-full text-white bg-main hover:bg-v400 focus:outline-none font-medium rounded-lg text-sm py-2 mt-1 sm:mt-2'
+          >
+            보러가기
+          </button>
+        </ChatBubble>
+      </div>
+    ) : (
+      <ChatBubble
+        key={`${Math.random()}-${index}`}
+        sender={speaker}
+        message={text}
+      />
+    )
+  );
+};
+
 export default function Chat() {
   const [showIntro, setShowIntro] = useState(true);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -47,6 +90,7 @@ export default function Chat() {
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ['movieData', searchParams],
     queryFn: () => getMovieList(searchParams),
+    staleTime: 5 * 1000,
   });
 
   useEffect(() => {
@@ -84,41 +128,38 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    if (sendCount === 1) {
-      setSearchParams((prev) => ({ ...prev, feeling: userInput }));
-      setUserInput('');
-      const sendMessage = setTimeout(() => {
+    const sendMessage = (speaker, messages) => {
+      setTimeout(() => {
         setChat((prev) => [
           ...prev,
           {
-            speaker: 'ai',
-            message: [
-              '그랬군요!',
-              '오늘 같은 날 딱 맞는 영화로 하루를 마무리하면 더 완벽한 하루가 될거에요!🍀',
-              '어떤 장르의 영화가 좋으세요?',
-            ],
+            speaker,
+            message: messages,
           },
         ]);
-      }, 2000);
+      }, 1000);
+    };
 
-      return () => clearTimeout(sendMessage);
+    if (sendCount === 1) {
+      setSearchParams((prev) => ({ ...prev, feeling: userInput }));
+      setUserInput('');
+
+      sendMessage('ai', [
+        '그랬군요!',
+        '오늘 같은 날 딱 맞는 영화로 하루를 마무리하면 더 완벽한 하루가 될거에요!🍀',
+        '어떤 장르의 영화가 좋으세요?',
+      ]);
     }
 
     if (sendCount === 2) {
       setSearchParams((prev) => ({ ...prev, situation: userInput }));
       setUserInput('');
 
-      const sendMessage = setTimeout(() => {
-        setChat((prev) => [
-          ...prev,
-          {
-            speaker: 'ai',
-            message: ['역시 탁월한 선택입니다🕶️', '', '결과가 맘에 드시나요?'],
-          },
-        ]);
-      }, 1000);
-
-      return () => clearTimeout(sendMessage);
+      sendMessage('ai', [
+        '역시 탁월한 선택입니다🕶️',
+        '',
+        '결과가 맘에 드시나요?',
+      ]);
     }
   }, [sendCount]);
 
@@ -183,7 +224,7 @@ export default function Chat() {
           ) : (
             <div className='w-full '>
               <div className='w-full flex-1'>
-                {chat?.map((item, i) =>
+                {/* {chat?.map((item, i) =>
                   item.speaker === 'ai' ? (
                     <div key={i} className='flex justify-start'>
                       <div className='min-w-[40px]'>
@@ -201,8 +242,9 @@ export default function Chat() {
                             AI
                           </span>
                         </div>
+
                         {item.message?.map((text, index) =>
-                          text === '' && isPending ? (
+                          text === '' ? (
                             <div key={`${i}-${index}`}>
                               <ChatBubble sender={item.speaker}>
                                 <div className='flex items-center justify-center space-x-1'>
@@ -232,6 +274,46 @@ export default function Chat() {
                             />
                           )
                         )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={i} className='flex justify-end'>
+                      <div className=''>
+                        {item.message?.map((text, index) => (
+                          <ChatBubble
+                            key={`${i}-${index}`}
+                            sender={item.speaker}
+                            message={text}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+                )} */}
+
+                {chat?.map((item, i) =>
+                  item.speaker === 'ai' ? (
+                    <div key={i} className='flex justify-start'>
+                      <div className='min-w-[40px]'>
+                        <Image
+                          src='/chat-character.png'
+                          width={40}
+                          height={40}
+                          alt='character img'
+                        />
+                      </div>
+                      <div className='mx-2 flex-1'>
+                        <div className='flex items-center'>
+                          <div className='text-[#656565] text-sm'>이오지오</div>
+                          <span className='ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block'>
+                            AI
+                          </span>
+                        </div>
+                        <MessageBubble
+                          speaker={item.speaker}
+                          message={item.message}
+                          isLoading={isPending && i === chat.length - 1} // 마지막 메시지만 로딩 상태 적용
+                        />
                       </div>
                     </div>
                   ) : (
@@ -316,11 +398,11 @@ export default function Chat() {
                     {movie.movieName}
                   </div>
                   <div className='text-g100 mb-1 text-xs '>2016</div>
-                  <div className='flex justify-center items-center flex-wrap space-x-1 mb-1'>
+                  <div className='flex justify-center items-center flex-wrap space-x-1'>
                     {movie.keywords.map((keyword, i) => (
                       <div
                         key={i}
-                        className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl'
+                        className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl mb-1'
                       >
                         {keyword}
                       </div>

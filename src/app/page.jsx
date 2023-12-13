@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Logo from '@public/logo-otte.svg';
 import MypageIcon from '@public/icon-mypage.svg';
 import Image from 'next/image';
+import SplashScreen from './_components/SplashScreen';
 
 export default function Home() {
   const [welcomeText, setWelcomeText] = useState('반가워요 저는 이오지오에요');
@@ -30,7 +31,9 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  return (
+  return isFirst ? (
+    <SplashScreen />
+  ) : (
     <>
       <header className='h-16 w-full py-2 px-5 flex items-center justify-between mb-8 sm:mb-10'>
         <Link href='/'>
