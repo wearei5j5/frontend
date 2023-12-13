@@ -205,7 +205,7 @@ export default function Chat() {
           <div className='relative flex'>
             <input
               type='text'
-              className='bg-white border border-gray-300 text-gray-900 text-sm block w-full py-2 pl-5 pr-20 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block leading-7 placeholder:leading-7'
+              className='bg-white border border-gray-300 text-gray-900 text-sm w-full py-2 pl-5 pr-20 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block leading-7 placeholder:leading-7'
               placeholder='이오지오에게 말해보세요'
               required
             />
@@ -224,14 +224,14 @@ export default function Chat() {
           handleClickCloseModal={() => setOpen(false)}
         >
           <div className='w-full h-full flex flex-col'>
-            <div className='flex justify-center mb-6 mt-1 w-full mt-6'>
-              <div className='rounded-3xl	border-1  font-semibold text-lg  text-white py-3 px-4 border-white w-fit'>
+            <div className='flex justify-center mb-6 mt-6 w-full'>
+              <div className='rounded-3xl border-1 font-semibold  text-white py-3 px-4 border-white w-fit'>
                 {userInfo.name}님을 위한 추천 결과
               </div>
             </div>
-            <Slider {...settings} ce className='w-full h-full grow'>
-              <div className='w-full flex flex-col text-center'>
-                <div className='shadow-poster rounded-lg overflow-hidden relative sm:h-full max-h-[700px] min-h-[340px] grow m-4'>
+            <Slider {...settings} className='w-full h-full grow'>
+              <div className='w-full sm:h-full flex sm:max-h-[700px] flex-col text-center'>
+                <div className='shadow-poster rounded-lg overflow-hidden relative min-h-[340px] h-full grow m-4'>
                   <Image
                     src={'/movie-poster1.jpeg'}
                     className='w-full h-full'
@@ -243,7 +243,7 @@ export default function Chat() {
                 <div className='text-lg text-white font-bold mb-0.5'>
                   라라랜드
                 </div>
-                <div className='text-md text-g100 mb-1'>2016</div>
+                <div className='text-g100 mb-1 text-xs '>2016</div>
                 <div className='flex justify-center items-center space-x-1'>
                   <div className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl'>
                     뮤직
@@ -256,8 +256,8 @@ export default function Chat() {
                   </div>
                 </div>
               </div>
-              <div className='w-full flex flex-col text-center'>
-                <div className='shadow-poster rounded-lg overflow-hidden relative sm:h-full max-h-[700px] min-h-[340px] grow m-4'>
+              <div className='w-full sm:h-full flex sm:max-h-[700px] flex-col text-center'>
+                <div className='shadow-poster rounded-lg overflow-hidden relative min-h-[340px] h-full grow m-4'>
                   <Image
                     src={'/movie-poster1.jpeg'}
                     className='w-full h-full'
@@ -269,7 +269,7 @@ export default function Chat() {
                 <div className='text-lg text-white font-bold mb-0.5'>
                   라라랜드
                 </div>
-                <div className='text-md text-g100 mb-1'>2016</div>
+                <div className='text-g100 mb-1 text-xs '>2016</div>
                 <div className='flex justify-center items-center space-x-1'>
                   <div className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl'>
                     뮤직
@@ -282,8 +282,8 @@ export default function Chat() {
                   </div>
                 </div>
               </div>
-              <div className='w-full flex flex-col text-center'>
-                <div className='shadow-poster rounded-lg overflow-hidden relative sm:h-full max-h-[700px] min-h-[340px] grow m-4'>
+              <div className='w-full sm:h-full flex sm:max-h-[700px] flex-col text-center'>
+                <div className='shadow-poster rounded-lg overflow-hidden relative min-h-[340px] h-full grow m-4'>
                   <Image
                     src={'/movie-poster1.jpeg'}
                     className='w-full h-full'
@@ -295,7 +295,7 @@ export default function Chat() {
                 <div className='text-lg text-white font-bold mb-0.5'>
                   라라랜드
                 </div>
-                <div className='text-md text-g100 mb-1'>2016</div>
+                <div className='text-g100 mb-1 text-xs '>2016</div>
                 <div className='flex justify-center items-center space-x-1'>
                   <div className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl'>
                     뮤직
