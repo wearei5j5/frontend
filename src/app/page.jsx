@@ -2,9 +2,9 @@
 
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-import { useRecoilValue } from 'recoil';
 import { isFirstState } from '@/store/initInfo/atom';
+import { useRecoilValue } from 'recoil';
+
 import Link from 'next/link';
 
 import Logo from '@public/logo-otte.svg';
@@ -13,6 +13,7 @@ import Image from 'next/image';
 
 export default function Home() {
   const [welcomeText, setWelcomeText] = useState('반가워요 저는 이오지오에요');
+
   const isFirst = useRecoilValue(isFirstState);
 
   useEffect(() => {

@@ -104,19 +104,16 @@ export default function Info() {
   };
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    dots: false,
     draggable: false,
     swipe: false,
     beforeChange: (current, next) => setSlideIndex(next),
   };
-
-  console.log(userInfo);
 
   const handleChangeAge = (e) => {
     setUserInfo((prev) => ({
@@ -131,15 +128,9 @@ export default function Info() {
       console.log('new ITEM', newItems);
       setUserInfo((prev) => ({ ...prev, ott: newItems }));
     } else {
-      // setSelectedDivs([...selectedDivs, id]);
       setUserInfo((prev) => ({ ...prev, ott: [...prev.ott, value] }));
     }
   };
-
-  // const isSelected = ottServices
-  //   .flat()
-  //   .filter((item) => userInfo.ott.includes(item.value));
-  // console.log(isSelected);
 
   return (
     <div className='flex flex-col h-full'>
@@ -229,7 +220,10 @@ export default function Info() {
               className='w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
               onClick={handleNextButton}
               disabled={
-                (slideIndex === 0 && userInfo.name === '') ||
+                (slideIndex === 0 &&
+                  (userInfo.name === '' ||
+                    userInfo.name.length > 5 ||
+                    userInfo.name.length < 3)) ||
                 (slideIndex === 1 && userInfo.age === 0) ||
                 (slideIndex === 2 && userInfo.ott.length === 0)
               }
