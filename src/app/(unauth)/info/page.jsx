@@ -162,7 +162,9 @@ export default function Info() {
               <div className='text-2xl font-bold text-g400 sm:mb-4 mb-3'>
                 뭐라고 불러드릴까요?
               </div>
-              <div className='text-sm text-g100 mb-14'>이름을 입력해주세요</div>
+              <div className='text-sm text-g100 mb-14'>
+                닉네임을 입력해주세요
+              </div>
               <div>
                 <input
                   type='text'
@@ -172,7 +174,7 @@ export default function Info() {
                   }
                   id='name'
                   className='bg-white border border-gray-300 text-gray-900 sm:text-base text-sm block w-full sm:p-4.5 p-3.5 rounded-xl focus:border-main focus:outline-none'
-                  placeholder='이름을 입력해주세요 (3~5자)'
+                  placeholder='닉네임을 입력해주세요'
                   required
                 />
               </div>
@@ -226,10 +228,7 @@ export default function Info() {
               className='w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
               onClick={handleNextButton}
               disabled={
-                (slideIndex === 0 &&
-                  (userInfo.name === '' ||
-                    userInfo.name.length > 5 ||
-                    userInfo.name.length < 3)) ||
+                (slideIndex === 0 && userInfo.name === '') ||
                 (slideIndex === 1 && userInfo.age === 0) ||
                 (slideIndex === 2 && userInfo.ott.length === 0)
               }

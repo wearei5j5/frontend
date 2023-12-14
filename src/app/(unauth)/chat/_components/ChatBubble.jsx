@@ -9,7 +9,18 @@ export default function ChatBubble(props) {
             : 'bg-main text-white rounded-l-xl rounded-br-xl rounded-tr-sm '
         }`}
       >
-        {props.children ? props.children : <div>{props.message}</div>}
+        {props.children ? (
+          props.children
+        ) : (
+          <div>
+            {props.message.split('\n').map((line, i) => (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

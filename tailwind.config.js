@@ -36,6 +36,10 @@ module.exports = {
         line: 'inset 0 0 0 2px #6E44E5, 0 4px 10px rgba(0,0,0,0.1)',
         poster: '0px 30px 50px 0px rgba(0, 0, 0, 0.50)',
         mypage: '0px 0px 20px 0px rgba(0, 0, 0, 0.15);',
+        more: '0px 0px 10px 0px rgba(0, 0, 0, 0.10);',
+      },
+      padding: {
+        xl: '100px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

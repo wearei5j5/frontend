@@ -101,7 +101,7 @@ export default function Mypage() {
         />
         <div className='ml-1 text-lg font-bold'>My page</div>
       </header>
-      <div className='flex flex-col divide-y-6 divide-b100 h-[calc(100%-64px)]'>
+      <div className='flex flex-col divide-y-6 divide-b100 h-[calc(100%-64px)] overflow-y-auto'>
         <div className='px-5 pb-5 flex flex-col items-center'>
           <div className='w-[55px] h-[55px] bg-g50 flex justify-center items-center rounded-2.5xl'>
             <UserIcon />
@@ -138,11 +138,11 @@ export default function Mypage() {
             </div>
           </div>
         </div>
-        <div className='px-5 py-8 h-full grow overflow-y-auto'>
+        <div className='px-5 py-8 h-full grow'>
           <div className='text-g200 font-semibold text-lg mb-5'>
             나의 콘텐츠 수첩
           </div>
-          <div className='grid grid-cols-2 gap-5 px-5'>
+          <div className='grid grid-cols-2 gap-5 px-5 pb-3'>
             {list.map((item, index) => (
               <div
                 key={index}
@@ -150,11 +150,13 @@ export default function Mypage() {
               ></div>
             ))}
           </div>
-          <div
-            className='mt-3 text-center font-semibold text-lg text-g100 cursor-pointer'
-            onClick={handleClickMore}
-          >
-            더보기
+          <div className='flex justify-center items-center pt-2 pb-3'>
+            <div
+              className='border shadow-more rounded-xl border-g50 text-center font-semibold text-lg text-g100 cursor-pointer px-xl py-3 w-fit'
+              onClick={handleClickMore}
+            >
+              더보기
+            </div>
           </div>
         </div>
       </div>
@@ -176,14 +178,16 @@ export default function Mypage() {
               <div className='text-2xl font-bold text-g400 sm:mb-4 mb-3 break-keep'>
                 뭐라고 불러드릴까요?
               </div>
-              <div className='text-sm text-g100 mb-14'>이름을 입력해주세요</div>
+              <div className='text-sm text-g100 mb-14'>
+                닉네임을 입력해주세요
+              </div>
               <div>
                 <input
                   type='text'
                   defaultValue={''}
                   id='name'
                   className='bg-white border border-gray-300 text-gray-900 sm:text-base text-sm block w-full sm:p-4.5 p-3.5 rounded-xl focus:border-main focus:outline-none'
-                  placeholder='이름을 입력해주세요 (3~5자)'
+                  placeholder='닉네임을 입력해주세요'
                   required
                 />
               </div>

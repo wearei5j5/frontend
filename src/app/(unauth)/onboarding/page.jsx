@@ -57,7 +57,7 @@ export default function OnBoarding() {
                   내가 구독하고 있는 OTT를 한 번에!
                 </div>
                 <div className='text-[22px] text-g300 text-center font-bold mb-10'>
-                  OTT 통합 추천 서비스
+                  OTT 통합 콘텐츠 추천 서비스
                 </div>
                 <div className='slide-content-img relative h-full bg-bottom-4 bg-no-repeat bg-[url("/onboarding1.png")] bg-contain'></div>
               </div>
@@ -66,7 +66,7 @@ export default function OnBoarding() {
                   당신을 위한 오때의 만능 AI 이오지오의
                 </div>
                 <div className='text-[22px] text-g300 text-center font-bold mb-10'>
-                  당신에게 꼭 맞는 작품 추천
+                  당신에게 꼭 맞는 콘텐츠 추천
                 </div>
                 <div className='slide-content-img relative h-full bg-bottom-4 bg-no-repeat bg-[url("/onboarding2.png")] bg-contain'></div>
               </div>
@@ -75,7 +75,7 @@ export default function OnBoarding() {
                   원하는 영화는 저장하고 두고두고 꺼내보세요
                 </div>
                 <div className='text-[22px] text-g300 text-center font-bold mb-10'>
-                  나의 콘텐츠 노트 기능
+                  나의 콘텐츠 수첩 기능
                 </div>
                 <div className='slide-content-img relative h-full bg-bottom-4 bg-no-repeat bg-[url("/onboarding3.png")] bg-contain'></div>
               </div>
@@ -98,7 +98,7 @@ export default function OnBoarding() {
               로그인 없이 사용하기
             </Link>
             <div className='mt-3 px-4 py-2.5 bg-[#BFBFBF] text-white text-xs text-center rounded-2xl w-fit relative before:border-[#BFBFBF] before:w-0 before:h-0 before:border-l-[4px] before:border-l-transparent before:border-b-[5px]  before:border-r-[4px] before:border-r-transparent before:absolute before:bottom-9 before:left-1/2'>
-              ⚠️추천된 영화 저장하기 기능을 사용할 수 없어요!⚠️
+              ⚠️나의 OTT 콘텐츠 수첩 기능을 사용할 수 없어요️⚠️
             </div>
           </div>
         </div>
