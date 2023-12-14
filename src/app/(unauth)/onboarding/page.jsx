@@ -10,6 +10,8 @@ import KakaoIcon from '@public/icon-kakaotalk.svg';
 import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useRecoilValue } from 'recoil';
+import { isFirstState } from '@/store/initInfo/atom';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -23,6 +25,9 @@ export default function OnBoarding() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const isFirst = useRecoilValue(isFirstState);
+  console.log('isFirst?', isFirst);
 
   const settings = {
     dots: true,
