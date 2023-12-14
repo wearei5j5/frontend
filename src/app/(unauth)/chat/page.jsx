@@ -370,13 +370,13 @@ export default function Chat() {
           bg={'bg-gradient-movie'}
           handleClickCloseModal={() => setOpen(false)}
         >
-          <div className='w-full h-full flex flex-col'>
+          <div className='w-full h-full flex flex-col relative'>
             <div className='flex justify-center mb-5 mt-5 w-full'>
               <div className='rounded-3xl border-1 font-semibold  text-white py-3 px-4 border-white w-fit'>
                 {userInfo.name}님을 위한 추천 결과
               </div>
             </div>
-            <Slider {...settings} className='w-full h-full grow'>
+            <Slider {...settings} className='w-full h-[calc(100%-68px)] grow'>
               {data?.data?.map((movie, idx) => (
                 <div
                   key={idx}
@@ -411,6 +411,14 @@ export default function Chat() {
                 </div>
               ))}
             </Slider>
+            <div className='px-4 pb-4 absolute bottom-0 w-full'>
+              <div
+                onClick={() => setOpen(false)}
+                className='modal-close w-full rounded-xl p-4 bg-main text-center text-white text-sm z-50'
+              >
+                닫기
+              </div>
+            </div>
           </div>
         </Modal>
       )}

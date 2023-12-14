@@ -12,15 +12,6 @@ export default function Modal(props) {
           <div className='h-full modal-content grow-1 container mx-auto h-auto text-left'>
             {props.children}
           </div>
-
-          <div className='p-4'>
-            <div
-              onClick={props.handleClickCloseModal}
-              className='modal-close w-full rounded-xl p-4 bg-main text-center text-white text-sm z-50'
-            >
-              닫기
-            </div>
-          </div>
         </div>
       </div>
     </>
