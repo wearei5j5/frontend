@@ -70,7 +70,6 @@ export default function OnBoarding() {
                 </div>
                 <div className='slide-content-img relative h-full bg-bottom-4 bg-no-repeat bg-[url("/onboarding2.png")] bg-contain'></div>
               </div>
-
               <div className='flex flex-col justify-center align-center h-full'>
                 <div className='text-sm text-g300 text-center'>
                   원하는 영화는 저장하고 두고두고 꺼내보세요
@@ -81,12 +80,8 @@ export default function OnBoarding() {
                 <div className='slide-content-img relative h-full bg-bottom-4 bg-no-repeat bg-[url("/onboarding3.png")] bg-contain'></div>
               </div>
             </Slider>
-            {/* <Slider {...settings}>
-              <div>TEST1</div>
-              <div>TEST2</div>
-              <div>TEST3</div>
-            </Slider> */}
           </div>
+
           <div className='flex flex-col items-center'>
             <div
               onClick={handleKakaoLogin}
