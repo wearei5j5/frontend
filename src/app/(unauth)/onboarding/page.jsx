@@ -11,6 +11,8 @@ import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function OnBoarding() {
   const [showSplash, setShowSplash] = useState(true);
 
@@ -31,6 +33,10 @@ export default function OnBoarding() {
     arrows: false,
     appendDots: (dots) => <ul>{dots}</ul>,
     dotsClass: 'dots-custom',
+  };
+
+  const handleKakaoLogin = () => {
+    window.location.href = `${API_URL}/oauth2/code/kakao?state=/`;
   };
 
   return (
@@ -77,13 +83,13 @@ export default function OnBoarding() {
             </Slider> */}
           </div>
           <div className='flex flex-col items-center'>
-            <Link
-              href='/login'
+            <div
+              onClick={handleKakaoLogin}
               className='w-full bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative'
             >
               카카오톡으로 시작하기
               <KakaoIcon className='absolute top-4 left-5' />
-            </Link>
+            </div>
 
             <Link
               href='/info'

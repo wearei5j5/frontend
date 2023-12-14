@@ -1,9 +1,12 @@
 export default function Mypage() {
-  // 로그인이 되어있지 않으면 접근 못하도록 방지
-  // const isAuth = false
-
-  // if (!isAuth) {
-  //   redirect('/login');
-  // }
-  return <>Mypage</>;
+  return (
+    <>
+      <header className='flex items-align'>
+        <div>test1</div>
+        <div>test2</div>
+      </header>
+    </>
+  );
 }
+
+//http://localhost:3000/oauth2/callback/kakao
