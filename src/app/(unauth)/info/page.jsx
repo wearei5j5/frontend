@@ -153,8 +153,8 @@ export default function Info() {
           ))}
         </div>
 
-        <div className='flex flex-col justify-between h-[calc(100%-56px)] overflow-hidden'>
-          <Slider {...settings} ref={sliderRef} className='flex-1'>
+        <div className='flex flex-col justify-between h-[calc(100%-100px)] sm:h-[calc(100%-56px)]'>
+          <Slider {...settings} ref={sliderRef} className='flex-1 h-full'>
             <div className='px-5 sm:px-6'>
               <div className='text-2xl font-bold text-g400 sm:mb-4 mb-3'>
                 뭐라고 불러드릴까요?
@@ -190,7 +190,7 @@ export default function Info() {
               <div className='text-sm text-g100 mb-9 sm:mb-14'>
                 이 설정은 나중에 다시 수정할 수 있어요
               </div>
-              <div className='flex flex-col sm:space-y-6 space-y-3'>
+              <div className='flex flex-col sm:space-y-6 space-y-3 mb-3'>
                 {ottServices.map((item, i) => (
                   <div
                     key={i}
@@ -215,7 +215,7 @@ export default function Info() {
               </div>
             </div>
           </Slider>
-          <div className='px-5 sm:px-6'>
+          <div className='px-5 sm:px-6 my-3'>
             <button
               className='w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
               onClick={handleNextButton}

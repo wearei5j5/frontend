@@ -9,28 +9,8 @@
 
 .slick-list {
   height: 100%;
+  overflow-y: auto !important;
 }
-
-/* .range-slide input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 14px;
-  width: 16px;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-} */
-
-/* .range-slide input::-webkit-progress-value {
-  background-color: red;
-}
-
-.range-slide input::-webkit-progress-bar {
-  background-color: red;
-}
-
-.range-slide input::-moz-range-progress {
-  background-color: red;
-} */
 
 .range-value {
   background-color: #501ee0;
