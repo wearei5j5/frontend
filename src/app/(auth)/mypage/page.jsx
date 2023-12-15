@@ -1,7 +1,7 @@
 'use client';
 
 import ArrowLeftIcon from '@public/icon-arrow-left.svg';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Modal from '@/app/_components/Modal';
 import RcSlider from '@/app/(unauth)/info/_components/RcSlider';
@@ -91,6 +91,12 @@ export default function Mypage() {
     const newItems = Array.from({ length: 4 });
     setList((prev) => [...prev, ...newItems]);
   };
+  // console.log(localStorage.getItem('access_token') === null);
+
+  if (localStorage.getItem('access_token') === null) {
+    redirect('/login');
+    return;
+  }
 
   return (
     <>

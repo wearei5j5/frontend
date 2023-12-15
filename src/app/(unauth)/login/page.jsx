@@ -1,11 +1,9 @@
-import { redirect } from 'next/navigation';
-
 export default function Login() {
-  // 로그인이 되어있으면 접근 못하도록 방지
-  // const isAuth = true;
-
-  // if (isAuth) {
-  //   redirect('/chat');
-  // }
-  return <div>로그인 페이지</div>;
+  return (
+    <>
+      {/* <header className='px-4 py-4 sm:px-5 flex items-center'>HEADER</header>
+      <div className='w-full h-[calc(100%-56px)] border px-4'>콘텐츠</div> */}
+      로그인페이지
+    </>
+  );
 }

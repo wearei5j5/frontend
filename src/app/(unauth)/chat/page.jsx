@@ -451,12 +451,26 @@ export default function Chat() {
                               </div>
                             </div>
                           ) : (
-                            <Image
-                              src={movie.posterImageUrl}
-                              className='w-full h-full object-cover'
-                              fill
-                              alt='movie poster img'
-                            />
+                            <div className='relative h-full'>
+                              <Image
+                                src={movie.posterImageUrl}
+                                className='w-full h-full object-cover'
+                                fill
+                                alt='movie poster img'
+                              />
+                              {localStorage.getItem('access_token') && (
+                                <div
+                                  className='absolute top-3.5 right-3.5 cursor-pointer'
+                                  onClick={() => setBookmark((prev) => !prev)}
+                                >
+                                  {bookmark ? (
+                                    <BookmarkFullIcon />
+                                  ) : (
+                                    <BookmarkIcon />
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>
