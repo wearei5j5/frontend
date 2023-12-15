@@ -1,13 +1,12 @@
 .slick-list {
-  height: 82% !important;
+  height: 100% !important;
 }
 
 .slick-track {
-  /* height: 100% !important; */
+  height: 100% !important;
 }
 
 .slick-slide {
-  /* height: 100% !important; */
   opacity: 0.6 !important;
 
   -moz-transform: translateY(16px);
@@ -18,16 +17,7 @@
 }
 
 .slick-slide > div {
-  /* height: 100% !important; */
-}
-
-.slick-cloned {
-  /* height: 200px; */
-}
-
-.slick-active {
-  /* border: 1px solid yellow; */
-  /* height: 230px; */
+  height: 100% !important;
 }
 
 .slick-track {
@@ -52,6 +42,5 @@
   transform: scale(1.08);
   transform: translateY(2px);
 
-  /* transform: ; */
   opacity: 1 !important;
 }

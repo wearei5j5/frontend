@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChatBubble from './_components/ChatBubble';
 import Link from 'next/link';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -50,7 +50,7 @@ const MessageBubble = ({
   return message.map((text, index) => {
     if (text === '') {
       return (
-        <div key={`${Math.random()}-${index}`}>
+        <div key={`${Math.random()}-${index}`} className='w-fit'>
           <ChatBubble sender={speaker}>
             <div className='flex items-center justify-center space-x-1'>
               <Image
@@ -59,7 +59,7 @@ const MessageBubble = ({
                 width={55}
                 height={55}
               />
-              <div className='font-medium break-keep sm:max-w-fit max-w-[112px]'>
+              <div className='font-medium break-keep sm:max-w-fit'>
                 {userInfo.name}님에게 딱 맞는 영화 추천 결과
               </div>
             </div>
@@ -120,13 +120,15 @@ export default function Chat() {
     situation: '',
   });
 
+  const messageEndRef = useRef(null);
+
   const today = dayjs(new Date()).format('YYYY년 MM월 DD일 (dd)');
 
   const settings = {
     className: 'center',
     centerMode: true,
     infinite: true,
-    centerPadding: '50px',
+    centerPadding: '40px',
     slidesToShow: 1,
     speed: 500,
   };
@@ -240,7 +242,7 @@ export default function Chat() {
           ...prev,
           {
             speaker: 'user',
-            message: ['음.. 끌리지않는 것 같아'],
+            message: ['음..끌리지않는 것 같아'],
           },
         ]);
 
@@ -251,6 +253,12 @@ export default function Chat() {
       }
     }
   }, [satisfy]);
+
+  useEffect(() => {
+    if (!messageEndRef.current) return;
+
+    messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [chat, isPending]);
 
   const handleClickSatisfyButton = (review) => {
     if (satisfy === null) {
@@ -355,19 +363,18 @@ export default function Chat() {
                     </div>
                   ) : (
                     <div key={i} className='flex justify-end'>
-                      <div className=''>
-                        {item.message?.map((text, index) => (
-                          <ChatBubble
-                            key={`${i}-${index}`}
-                            sender={item.speaker}
-                            message={text}
-                          />
-                        ))}
-                      </div>
+                      {item.message?.map((text, index) => (
+                        <ChatBubble
+                          key={`${i}-${index}`}
+                          sender={item.speaker}
+                          message={text}
+                        />
+                      ))}
                     </div>
                   )
                 )}
               </div>
+              <div ref={messageEndRef}></div>
             </div>
           )}
         </div>
@@ -416,79 +423,77 @@ export default function Chat() {
                 {userInfo.name}님을 위한 추천 결과
               </div>
             </div>
-            <Slider {...settings} className='w-full h-[calc(100%-68px)] grow'>
-              {data?.data?.map((movie, idx) => (
+            <div className='h-[calc(100%-50px)] flex flex-col justify-between'>
+              <div className='grow'>
+                <Slider {...settings} className='h-full'>
+                  {data?.data?.map((movie, idx) => (
+                    <div
+                      key={idx}
+                      className='w-full h-full flex flex-col justify-center items-center text-center'
+                    >
+                      <div className='h-3/4 px-5 pb-5'>
+                        <div className='h-full relative shadow-poster rounded-lg overflow-hidden'>
+                          {movie.posterImageUrl === null ? (
+                            <div className='flex flex-col justify-center items-center h-full'>
+                              <div className='relative  w-[158px] h-[135px]'>
+                                <Image
+                                  src='/null-character.png'
+                                  className='w-full grow object-cover'
+                                  fill
+                                  alt='movie poster null img'
+                                />
+                              </div>
+                              <div className='text-xl mb-2 font-semibold text-v75'>
+                                Sorry💦
+                              </div>
+                              <div className='text-sm text-v75'>
+                                영화 이미지를 불러오지 못했어요!
+                              </div>
+                            </div>
+                          ) : (
+                            <Image
+                              src={movie.posterImageUrl}
+                              className='w-full h-full object-cover'
+                              fill
+                              alt='movie poster img'
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <div className='text-lg text-white font-bold mb-0.5'>
+                          {movie.movieName}
+                        </div>
+                        <div className='text-g100 mb-1 text-xs'>
+                          {movie.releaseDate !== null &&
+                            movie.releaseDate.split('-')[0]}
+                        </div>
+                        <div className='flex justify-center items-center flex-wrap space-x-1'>
+                          {movie.keywords.map(
+                            (keyword, i) =>
+                              keyword.length !== 0 &&
+                              keyword.slice(1) !== '' && (
+                                <div
+                                  key={i}
+                                  className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl mb-1'
+                                >
+                                  {keyword.slice(1)}
+                                </div>
+                              )
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+              <div className='px-4 pb-4'>
                 <div
-                  key={idx}
-                  className='w-full sm:h-full flex sm:max-h-[700px] flex-col text-center'
+                  onClick={handleModalClose}
+                  className='modal-close w-full rounded-xl p-4 bg-main text-center text-white text-sm z-50'
                 >
-                  <div className='shadow-poster rounded-lg overflow-hidden relative min-h-[340px] h-full grow m-4'>
-                    {movie.posterImageUrl === null ? (
-                      <div className='flex flex-col justify-center items-center h-full'>
-                        <div className='w-[158px] h-[135px] relative mt-16'>
-                          <Image
-                            src='/null-character.png'
-                            className='w-full h-full object-cover'
-                            fill
-                            alt='movie poster null img'
-                          />
-                        </div>
-                        <div className='text-xl mb-2 font-semibold text-v75'>
-                          Sorry💦
-                        </div>
-                        <div className='text-sm text-v75'>
-                          영화 이미지를 불러오지 못했어요!
-                        </div>
-                      </div>
-                    ) : (
-                      <div className='relative h-full min-h-[340px] '>
-                        <Image
-                          src={movie.posterImageUrl}
-                          className='w-full h-full object-cover'
-                          fill
-                          alt='movie poster img'
-                        />
-                        {localStorage.getItem('access_token') && (
-                          <div
-                            className='absolute top-3.5 right-3.5 cursor-pointer'
-                            onClick={() => setBookmark((prev) => !prev)}
-                          >
-                            {bookmark ? <BookmarkFullIcon /> : <BookmarkIcon />}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <div className='text-lg text-white font-bold mb-0.5'>
-                    {movie.movieName}
-                  </div>
-                  <div className='text-g100 mb-1 text-xs'>
-                    {movie.releaseDate !== null &&
-                      movie.releaseDate.split('-')[0]}
-                  </div>
-                  <div className='flex justify-center items-center flex-wrap space-x-1'>
-                    {movie.keywords.map(
-                      (keyword, i) =>
-                        keyword.length !== 0 &&
-                        keyword.slice(1) !== '' && (
-                          <div
-                            key={i}
-                            className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl mb-1'
-                          >
-                            {keyword.slice(1)}
-                          </div>
-                        )
-                    )}
-                  </div>
+                  닫기
                 </div>
-              ))}
-            </Slider>
-            <div className='px-4 pb-4 absolute bottom-0 w-full'>
-              <div
-                onClick={handleModalClose}
-                className='modal-close w-full rounded-xl p-4 bg-main text-center text-white text-sm z-50'
-              >
-                닫기
               </div>
             </div>
           </div>
