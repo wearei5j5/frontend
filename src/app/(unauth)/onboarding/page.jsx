@@ -41,7 +41,7 @@ export default function OnBoarding() {
   };
 
   const handleKakaoLogin = () => {
-    window.location.href = `${API_URL}/oauth2/code/kakao?state=/`;
+    window.location.href = `${API_URL}/oauth2/code/kakao?state=/info`;
   };
 
   return (
