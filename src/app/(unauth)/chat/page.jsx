@@ -115,7 +115,7 @@ export default function Chat() {
   const [satisfyTrigger, setSatisfyTrigger] = useState(false);
 
   const [searchParams, setSearchParams] = useState({
-    ottList: userInfo.ott,
+    ottList: userInfo.ottList,
     feeling: '',
     situation: '',
   });
@@ -287,6 +287,16 @@ export default function Chat() {
       },
     ]);
     setSendCount((prev) => prev + 1);
+  };
+
+  const handleClickBookmark = (movieData) => {
+    const { movieName, keywords, posterImageUrl, releaseDate } = movieData;
+    const body = {
+      movieName,
+      keywords,
+      posterImageUrl,
+      releaseDate,
+    };
   };
 
   return (
@@ -461,9 +471,9 @@ export default function Chat() {
                               {localStorage.getItem('access_token') && (
                                 <div
                                   className='absolute top-3.5 right-3.5 cursor-pointer'
-                                  onClick={() => setBookmark((prev) => !prev)}
+                                  onClick={() => handleClickBookmark(movie)}
                                 >
-                                  {bookmark ? (
+                                  {movie.isCollected ? (
                                     <BookmarkFullIcon />
                                   ) : (
                                     <BookmarkIcon />

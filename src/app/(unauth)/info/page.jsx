@@ -24,6 +24,9 @@ import SeeznIcon from '@public/icon-seezn.svg';
 
 import RcSlider from './_components/RcSlider';
 import { userInfoState } from '@/store/userInfo/atom';
+import axios from 'axios';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Info() {
   const setIsFirst = useSetRecoilState(isFirstState);
@@ -89,6 +92,22 @@ export default function Info() {
   const handleNextButton = () => {
     if (slideIndex === 2) {
       setIsFirst(false);
+
+      if (localStorage.getItem('access_token')) {
+        axios.post(
+          `${API_URL}/api/v1/user`,
+          {
+            name: userInfo.name,
+            age: userInfo.age,
+            ottList: userInfo.ottList,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          }
+        );
+      }
       router.push('/');
       return;
     }
@@ -124,19 +143,19 @@ export default function Info() {
 
   const handleClickOtt = (value) => {
     if (value === 'NONE') {
-      setUserInfo((prev) => ({ ...prev, ott: [value] }));
+      setUserInfo((prev) => ({ ...prev, ottList: [value] }));
     } else {
-      if (userInfo.ott.includes('NONE')) {
+      if (userInfo.ottList.includes('NONE')) {
         setUserInfo((prev) => ({
           ...prev,
-          ott: userInfo.ott.filter((item) => item !== 'NONE'),
+          ottList: userInfo.ottList.filter((item) => item !== 'NONE'),
         }));
       }
-      if (userInfo.ott.includes(value)) {
-        const newItems = userInfo.ott.filter((item) => item !== value);
-        setUserInfo((prev) => ({ ...prev, ott: newItems }));
+      if (userInfo.ottList.includes(value)) {
+        const newItems = userInfo.ottList.filter((item) => item !== value);
+        setUserInfo((prev) => ({ ...prev, ottList: newItems }));
       } else {
-        setUserInfo((prev) => ({ ...prev, ott: [...prev.ott, value] }));
+        setUserInfo((prev) => ({ ...prev, ottList: [...prev.ottList, value] }));
       }
     }
   };
@@ -211,7 +230,7 @@ export default function Info() {
                     key={index}
                     onClick={() => handleClickOtt(item.value)}
                     className={`flex flex-col justify-center items-center rounded-3xl py-3 px-2.5 ${
-                      userInfo.ott.find((el) => el === item.value)
+                      userInfo.ottList.find((el) => el === item.value)
                         ? 'shadow-line bg-v50'
                         : 'shadow-square'
                     }`}
@@ -240,7 +259,7 @@ export default function Info() {
               disabled={
                 (slideIndex === 0 && userInfo.name === '') ||
                 (slideIndex === 1 && userInfo.age === 0) ||
-                (slideIndex === 2 && userInfo.ott.length === 0)
+                (slideIndex === 2 && userInfo.ottList.length === 0)
               }
             >
               {slideIndex === 2 ? '시작하기' : '다음'}

@@ -5,6 +5,7 @@ export const userInfoState = atom({
   default: {
     name: '',
     age: 0,
-    ott: [],
+    ottList: [],
+    profileImageUrl: '',
   },
 });

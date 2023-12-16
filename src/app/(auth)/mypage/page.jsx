@@ -16,11 +16,18 @@ import WatchaIcon from '@public/icon-watcha.svg';
 import WavveIcon from '@public/icon-wavve.svg';
 import AppleTvIcon from '@public/icon-apple-tv.svg';
 import SeeznIcon from '@public/icon-seezn.svg';
+import axios from 'axios';
+import { userInfoState } from '@/store/userInfo/atom';
+import { useRecoilState } from 'recoil';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Mypage() {
   const router = useRouter();
 
-  const [list, setList] = useState(Array.from({ length: 4 }));
+  const [list, setList] = useState([]);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [tempUserInfo, setTempUserInfo] = useState(userInfo);
 
   const [openModal, setOpenModal] = useState({
     isName: false,
@@ -79,11 +86,24 @@ export default function Mypage() {
   ];
 
   const handleClickOtt = (value) => {
-    if (userInfo.ott.includes(value)) {
-      const newItems = userInfo.ott.filter((item) => item !== value);
-      setUserInfo((prev) => ({ ...prev, ott: newItems }));
+    if (value === 'NONE') {
+      setTempUserInfo((prev) => ({ ...prev, ottList: [value] }));
     } else {
-      setUserInfo((prev) => ({ ...prev, ott: [...prev.ott, value] }));
+      if (tempUserInfo.ottList.includes('NONE')) {
+        setTempUserInfo((prev) => ({
+          ...prev,
+          ottList: tempUserInfo.ottList.filter((item) => item !== 'NONE'),
+        }));
+      }
+      if (tempUserInfo.ottList.includes(value)) {
+        const newItems = tempUserInfo.ottList.filter((item) => item !== value);
+        setTempUserInfo((prev) => ({ ...prev, ottList: newItems }));
+      } else {
+        setTempUserInfo((prev) => ({
+          ...prev,
+          ottList: [...prev.ottList, value],
+        }));
+      }
     }
   };
 
@@ -92,11 +112,45 @@ export default function Mypage() {
     setList((prev) => [...prev, ...newItems]);
   };
 
+  const handleChangeName = (e) => {
+    setTempUserInfo((prev) => ({ ...prev, name: e.target.value }));
+  };
+
+  const handleChangeAge = (e) => {
+    setTempUserInfo((prev) => ({
+      ...prev,
+      age: e,
+    }));
+  };
+
   useEffect(() => {
     if (window.localStorage.getItem('access_token') === null) {
       redirect('/login');
     }
+
+    axios
+      .get(`${API_URL}/api/v1/movie`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+      .then((res) => setList(res.data.data));
+
+    axios
+      .get(`${API_URL}/api/v1/user`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+      .then((res) => {
+        setUserInfo(res.data.data);
+        setTempUserInfo(res.data.data);
+      });
   }, []);
+
+  useEffect(() => {}, [userInfo]);
+
+  console.log('tempUserinfo', tempUserInfo);
 
   return (
     <>
@@ -112,21 +166,23 @@ export default function Mypage() {
           <div className='w-[55px] h-[55px] bg-g50 flex justify-center items-center rounded-2.5xl'>
             <UserIcon />
           </div>
-          <div className='text-lg text-g400 font-semibold mt-1'>김오태님</div>
-          <div className='text-sm text-g75'>25세</div>
+          <div className='text-lg text-g400 font-semibold mt-1'>
+            {userInfo.name}님
+          </div>
+          <div className='text-sm text-g75'>{userInfo.age}세</div>
           <div className='flex space-x-2 w-full text-center mt-5'>
             <div
               onClick={() =>
                 setOpenModal((prev) => ({ ...prev, isName: true }))
               }
-              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl'
+              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl cursor-pointer'
             >
               <div className='mb-2 text-3xl'>✏️</div>
               <div className='text-xs text-g100 font-semibold'>이름 수정</div>
             </div>
             <div
               onClick={() => setOpenModal((prev) => ({ ...prev, isAge: true }))}
-              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl'
+              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl cursor-pointer'
             >
               <div className='mb-2 text-3xl'>⏳</div>
               <div className='text-xs text-g100 font-semibold'>연령 수정</div>
@@ -135,7 +191,7 @@ export default function Mypage() {
               onClick={() =>
                 setOpenModal((prev) => ({ ...prev, isSubscribe: true }))
               }
-              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl'
+              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl cursor-pointer'
             >
               <div className='mb-2 text-3xl'>🎬</div>
               <div className='text-xs text-g100 font-semibold'>
@@ -149,21 +205,21 @@ export default function Mypage() {
             나의 콘텐츠 수첩
           </div>
           <div className='grid grid-cols-2 gap-5 px-5 pb-3'>
-            {list.map((item, index) => (
+            {list?.map((item, index) => (
               <div
                 key={index}
                 className='w-full h-44 sm:h-50 rounded-lg overflow-hidden shadow-square'
               ></div>
             ))}
           </div>
-          <div className='flex justify-center items-center pt-2 pb-3'>
+          {/* <div className='flex justify-center items-center pt-2 pb-3'>
             <div
               className='border shadow-more rounded-xl border-g50 text-center font-semibold text-lg text-g100 cursor-pointer px-xl py-3 w-fit'
               onClick={handleClickMore}
             >
               더보기
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -173,9 +229,10 @@ export default function Mypage() {
           <header className='px-4 py-2 sm:px-5 flex items-center'>
             <CloseIcon
               className='cursor-pointer'
-              onClick={() =>
-                setOpenModal((prev) => ({ ...prev, isName: false }))
-              }
+              onClick={() => {
+                setOpenModal((prev) => ({ ...prev, isName: false }));
+                setTempUserInfo(userInfo);
+              }}
             />
             <div className='ml-1 text-lg font-bold'>이름 수정</div>
           </header>
@@ -190,7 +247,8 @@ export default function Mypage() {
               <div>
                 <input
                   type='text'
-                  defaultValue={''}
+                  defaultValue={tempUserInfo.name}
+                  onChange={(e) => handleChangeName(e)}
                   id='name'
                   className='bg-white border border-gray-300 text-gray-900 sm:text-base text-sm block w-full sm:p-4.5 p-3.5 rounded-xl focus:border-main focus:outline-none'
                   placeholder='닉네임을 입력해주세요'
@@ -200,9 +258,27 @@ export default function Mypage() {
             </div>
 
             <button
-              onClick={() =>
-                setOpenModal((prev) => ({ ...prev, isName: false }))
-              }
+              onClick={() => {
+                setOpenModal((prev) => ({ ...prev, isName: false }));
+                setUserInfo((prev) => ({ ...prev, name: tempUserInfo.name }));
+
+                axios.post(
+                  `${API_URL}/api/v1/user`,
+                  {
+                    name: tempUserInfo.name,
+                    age: userInfo.age,
+                    ottList: userInfo.ottList,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem(
+                        'access_token'
+                      )}`,
+                    },
+                  }
+                );
+              }}
+              disabled={tempUserInfo.name === ''}
               className='mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
             >
               완료
@@ -217,9 +293,10 @@ export default function Mypage() {
           <header className='px-4 py-2 sm:px-5 flex items-center'>
             <CloseIcon
               className='cursor-pointer'
-              onClick={() =>
-                setOpenModal((prev) => ({ ...prev, isAge: false }))
-              }
+              onClick={() => {
+                setOpenModal((prev) => ({ ...prev, isAge: false }));
+                setTempUserInfo(userInfo);
+              }}
             />
             <div className='ml-1 text-lg font-bold'>연령 수정</div>
           </header>
@@ -230,14 +307,32 @@ export default function Mypage() {
               </div>
               <div className='text-sm text-g100 mb-14'>나이를 입력해주세요</div>
               <div className='relative mb-6 range-slide'>
-                <RcSlider value={30} />
+                <RcSlider value={tempUserInfo.age} onChange={handleChangeAge} />
               </div>
             </div>
 
             <button
-              onClick={() =>
-                setOpenModal((prev) => ({ ...prev, isAge: false }))
-              }
+              onClick={() => {
+                setOpenModal((prev) => ({ ...prev, isAge: false }));
+                setUserInfo((prev) => ({ ...prev, age: tempUserInfo.age }));
+
+                axios.post(
+                  `${API_URL}/api/v1/user`,
+                  {
+                    name: userInfo.name,
+                    age: tempUserInfo.age,
+                    ottList: userInfo.ottList,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem(
+                        'access_token'
+                      )}`,
+                    },
+                  }
+                );
+              }}
+              disabled={tempUserInfo.age === 0}
               className='mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
             >
               완료
@@ -252,9 +347,10 @@ export default function Mypage() {
           <header className='px-4 py-2 sm:px-5 flex items-center'>
             <CloseIcon
               className='cursor-pointer'
-              onClick={() =>
-                setOpenModal((prev) => ({ ...prev, isSubscribe: false }))
-              }
+              onClick={() => {
+                setOpenModal((prev) => ({ ...prev, isSubscribe: false }));
+                setTempUserInfo(userInfo);
+              }}
             />
             <div className='ml-1 text-lg font-bold'>구독정보 수정</div>
           </header>
@@ -271,14 +367,12 @@ export default function Mypage() {
                 {ottServices.map((item, index) => (
                   <div
                     key={index}
-                    // onClick={() => handleClickOtt(item.value)}
-                    // className={`flex flex-col justify-center items-center rounded-3xl py-3 px-2.5 ${
-                    //   userInfo.ott.find((el) => el === item.value)
-                    //     ? 'shadow-line bg-v50'
-                    //     : 'shadow-square'
-                    // }`}
-
-                    className='flex flex-col justify-center items-center rounded-3xl py-3 px-2.5 shadow-square'
+                    onClick={() => handleClickOtt(item.value)}
+                    className={`flex flex-col justify-center items-center rounded-3xl py-3 px-2.5 ${
+                      tempUserInfo.ottList.find((el) => el === item.value)
+                        ? 'shadow-line bg-v50'
+                        : 'shadow-square'
+                    }`}
                   >
                     <div
                       className={`${item.value === 'none' && 'text-3xl mt-3'}`}
@@ -298,9 +392,25 @@ export default function Mypage() {
             </div>
 
             <button
-              onClick={() =>
-                setOpenModal((prev) => ({ ...prev, isSubscribe: false }))
-              }
+              onClick={() => {
+                setOpenModal((prev) => ({ ...prev, isSubscribe: false }));
+                axios.post(
+                  `${API_URL}/api/v1/user`,
+                  {
+                    name: userInfo.name,
+                    age: userInfo.age,
+                    ottList: tempUserInfo.ottList,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem(
+                        'access_token'
+                      )}`,
+                    },
+                  }
+                );
+              }}
+              disabled={tempUserInfo.ottList.length === 0}
               className='mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300'
             >
               완료
