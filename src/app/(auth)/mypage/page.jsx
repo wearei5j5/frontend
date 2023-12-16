@@ -2,7 +2,7 @@
 
 import ArrowLeftIcon from '@public/icon-arrow-left.svg';
 import { redirect, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@/app/_components/Modal';
 import RcSlider from '@/app/(unauth)/info/_components/RcSlider';
 
@@ -92,10 +92,11 @@ export default function Mypage() {
     setList((prev) => [...prev, ...newItems]);
   };
 
-  if (window.localStorage.getItem('access_token') === null) {
-    redirect('/login');
-    return;
-  }
+  useEffect(() => {
+    if (window.localStorage.getItem('access_token') === null) {
+      redirect('/login');
+    }
+  }, []);
 
   return (
     <>
