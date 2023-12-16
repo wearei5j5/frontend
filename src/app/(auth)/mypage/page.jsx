@@ -91,9 +91,8 @@ export default function Mypage() {
     const newItems = Array.from({ length: 4 });
     setList((prev) => [...prev, ...newItems]);
   };
-  // console.log(localStorage.getItem('access_token') === null);
 
-  if (localStorage.getItem('access_token') === null) {
+  if (window.localStorage.getItem('access_token') === null) {
     redirect('/login');
     return;
   }
