@@ -38,49 +38,49 @@ export default function Info() {
 
   const ottServices = [
     {
-      value: 'tving',
+      value: 'TVING',
       name: '티빙',
       icon: <TvingIcon />,
     },
     {
-      value: 'netflix',
+      value: 'NETFLIX',
       name: '넷플릭스',
       icon: <NetflixIcon />,
     },
     {
-      value: 'coupang play',
+      value: 'COUPANG_PLAY',
       name: '쿠팡플레이',
       icon: <CoupangPlayIcon />,
     },
 
     {
-      value: 'seezn',
+      value: 'SEEZN',
       name: '시즌',
       icon: <SeeznIcon />,
     },
     {
-      value: 'disney plus',
+      value: 'DISNEY_PLUS',
       name: '디즈니플러스',
       icon: <DisneyPlusIcon />,
     },
     {
-      value: 'watcha',
+      value: 'WATCHA',
       name: '왓차',
       icon: <WatchaIcon />,
     },
 
     {
-      value: 'wavve',
+      value: 'WAVVE',
       name: '웨이브',
       icon: <WavveIcon />,
     },
     {
-      value: 'apple tv',
+      value: 'APPLE_TV',
       name: '애플티비',
       icon: <AppleTvIcon />,
     },
     {
-      value: 'none',
+      value: 'NONE',
       name: '구독하지 않음',
       icon: '❎',
     },
@@ -123,11 +123,21 @@ export default function Info() {
   };
 
   const handleClickOtt = (value) => {
-    if (userInfo.ott.includes(value)) {
-      const newItems = userInfo.ott.filter((item) => item !== value);
-      setUserInfo((prev) => ({ ...prev, ott: newItems }));
+    if (value === 'NONE') {
+      setUserInfo((prev) => ({ ...prev, ott: [value] }));
     } else {
-      setUserInfo((prev) => ({ ...prev, ott: [...prev.ott, value] }));
+      if (userInfo.ott.includes('NONE')) {
+        setUserInfo((prev) => ({
+          ...prev,
+          ott: userInfo.ott.filter((item) => item !== 'NONE'),
+        }));
+      }
+      if (userInfo.ott.includes(value)) {
+        const newItems = userInfo.ott.filter((item) => item !== value);
+        setUserInfo((prev) => ({ ...prev, ott: newItems }));
+      } else {
+        setUserInfo((prev) => ({ ...prev, ott: [...prev.ott, value] }));
+      }
     }
   };
 

@@ -21,7 +21,7 @@ export default function OnBoarding() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -85,7 +85,7 @@ export default function OnBoarding() {
           <div className='flex flex-col items-center'>
             <div
               onClick={handleKakaoLogin}
-              className='w-full bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative'
+              className='cursor-pointer text-sm w-full bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative'
             >
               카카오톡으로 시작하기
               <KakaoIcon className='absolute top-4 left-5' />
@@ -93,7 +93,7 @@ export default function OnBoarding() {
 
             <Link
               href='/info'
-              className='w-full bg-main rounded-lg text-white py-3.5 text-center mt-3 font-medium'
+              className='cursor-pointer text-sm w-full bg-main rounded-lg text-white py-3.5 text-center mt-3 font-medium'
             >
               로그인 없이 사용하기
             </Link>

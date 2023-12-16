@@ -485,13 +485,12 @@ export default function Chat() {
                         <div className='flex justify-center items-center flex-wrap space-x-1'>
                           {movie.keywords.map(
                             (keyword, i) =>
-                              keyword.length !== 0 &&
-                              keyword.slice(1) !== '' && (
+                              keyword.length !== 0 && (
                                 <div
                                   key={i}
                                   className='border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl mb-1'
                                 >
-                                  {keyword.slice(1)}
+                                  {keyword}
                                 </div>
                               )
                           )}

@@ -18,7 +18,7 @@ export default function ChatBubble(props) {
         ) : (
           <div className='break-all'>
             {props.message.split('\n').map((line, i) => (
-              <span key={i}>
+              <span key={i} className='break-all'>
                 {line}
                 <br />
               </span>

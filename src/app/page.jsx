@@ -37,7 +37,7 @@ export default function Home() {
     <>
       <header className='h-16 w-full py-2 px-5 flex items-center justify-between'>
         <Link href='/'>
-          <Logo className='cursor-pointer' />
+          <Logo width='64' height='100%' className='cursor-pointer' />
         </Link>
         <Link href='/mypage'>
           <MypageIcon className='cursor-pointer ' />
@@ -58,7 +58,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='border-w border-main bg-bg-home bg-center w-full h-64 sm:h-96 bg-contain sm:bg-contain bg-no-repeat flex justify-center'>
+          <div
+            className='border-w border-main bg-cover bg-center bg-no-repeat w-full h-64 sm:h-96 sm:bg-contain flex justify-center'
+            style={{
+              backgroundImage: 'url("/bg-home.png")',
+            }}
+          >
             <Image
               src='/home-character.png'
               alt='character img'
