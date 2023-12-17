@@ -5,6 +5,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Modal from '@/app/_components/Modal';
 import RcSlider from '@/app/(unauth)/info/_components/RcSlider';
+import Image from 'next/image';
 
 import UserIcon from '@public/icon-user.svg';
 import CloseIcon from '@public/icon-close.svg';
@@ -148,10 +149,6 @@ export default function Mypage() {
       });
   }, []);
 
-  useEffect(() => {}, [userInfo]);
-
-  console.log('tempUserinfo', tempUserInfo);
-
   return (
     <>
       <header className='px-4 py-2 sm:px-5 flex items-center'>
@@ -163,8 +160,9 @@ export default function Mypage() {
       </header>
       <div className='flex flex-col divide-y-6 divide-b100 h-[calc(100%-64px)] overflow-y-auto'>
         <div className='px-5 pb-5 flex flex-col items-center'>
-          <div className='w-[55px] h-[55px] bg-g50 flex justify-center items-center rounded-2.5xl'>
-            <UserIcon />
+          <div className='w-[55px] h-[55px] bg-g50 flex justify-center items-center rounded-2.5xl overflow-hidden relative'>
+            {/* <UserIcon /> */}
+            <Image src={userInfo.profileImageUrl} alt='profile img' fill />
           </div>
           <div className='text-lg text-g400 font-semibold mt-1'>
             {userInfo.name}님
@@ -175,14 +173,14 @@ export default function Mypage() {
               onClick={() =>
                 setOpenModal((prev) => ({ ...prev, isName: true }))
               }
-              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl cursor-pointer'
+              className='flex flex-col justify-center grow w-full py-2.5 sm:py-5 px-5 shadow-mypage rounded-2xl cursor-pointer'
             >
               <div className='mb-2 text-3xl'>✏️</div>
               <div className='text-xs text-g100 font-semibold'>이름 수정</div>
             </div>
             <div
               onClick={() => setOpenModal((prev) => ({ ...prev, isAge: true }))}
-              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl cursor-pointer'
+              className='flex flex-col justify-center grow w-full py-2.5 sm:py-5 px-5 shadow-mypage rounded-2xl cursor-pointer'
             >
               <div className='mb-2 text-3xl'>⏳</div>
               <div className='text-xs text-g100 font-semibold'>연령 수정</div>
@@ -191,7 +189,7 @@ export default function Mypage() {
               onClick={() =>
                 setOpenModal((prev) => ({ ...prev, isSubscribe: true }))
               }
-              className='flex flex-col justify-center grow w-full py-2.5 px-5 shadow-mypage rounded-2xl cursor-pointer'
+              className='flex flex-col justify-center grow w-full py-2.5 sm:py-5 px-5 shadow-mypage rounded-2xl cursor-pointer'
             >
               <div className='mb-2 text-3xl'>🎬</div>
               <div className='text-xs text-g100 font-semibold'>
@@ -208,8 +206,15 @@ export default function Mypage() {
             {list?.map((item, index) => (
               <div
                 key={index}
-                className='w-full h-44 sm:h-50 rounded-lg overflow-hidden shadow-square'
-              ></div>
+                className='w-full h-44 sm:h-80 rounded-lg overflow-hidden shadow-square relative'
+              >
+                <Image
+                  src={item.posterImageUrl}
+                  alt='poster img'
+                  fill
+                  className='object-cover'
+                />
+              </div>
             ))}
           </div>
           {/* <div className='flex justify-center items-center pt-2 pb-3'>

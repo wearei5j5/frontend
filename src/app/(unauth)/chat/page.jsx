@@ -106,13 +106,13 @@ export default function Chat() {
   const [showIntro, setShowIntro] = useState(true);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [open, setOpen] = useRecoilState(modalState);
-  const [bookmark, setBookmark] = useState(false);
 
   const [userInput, setUserInput] = useState('');
   const [sendCount, setSendCount] = useState(0);
 
   const [satisfy, setSatisfy] = useState(null);
   const [satisfyTrigger, setSatisfyTrigger] = useState(false);
+  const [recommendedList, setRecommendedList] = useState([]);
 
   const [searchParams, setSearchParams] = useState({
     ottList: userInfo.ottList,
@@ -133,11 +133,17 @@ export default function Chat() {
     speed: 500,
   };
 
-  const { isPending, error, data, isFetching } = useQuery({
+  const { status, isPending, error, data, isFetching } = useQuery({
     queryKey: ['movieData', searchParams],
     queryFn: () => getMovieList(searchParams),
     staleTime: 5 * 1000,
   });
+
+  useEffect(() => {
+    if (status === 'success') {
+      setRecommendedList(data.data);
+    }
+  }, [status, data]);
 
   useEffect(() => {
     if (
@@ -290,13 +296,30 @@ export default function Chat() {
   };
 
   const handleClickBookmark = (movieData) => {
-    const { movieName, keywords, posterImageUrl, releaseDate } = movieData;
-    const body = {
-      movieName,
-      keywords,
-      posterImageUrl,
-      releaseDate,
-    };
+    if (movieData.isCollected === false) {
+      const { movieName, keywords, posterImageUrl, releaseDate } = movieData;
+      const body = {
+        movieName,
+        keywords,
+        posterImageUrl,
+        releaseDate,
+      };
+
+      axios.post(`${API_URL}/api/v1/movie`, body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      });
+
+      const updatedItem = recommendedList.map((item) => {
+        if (item.movieName === movieData.movieName) {
+          return { ...item, isCollected: true };
+        }
+        return item;
+      });
+
+      setRecommendedList(updatedItem);
+    }
   };
 
   return (
@@ -436,7 +459,7 @@ export default function Chat() {
             <div className='h-[calc(100%-50px)] flex flex-col justify-between'>
               <div className='grow'>
                 <Slider {...settings} className='h-full'>
-                  {data?.data?.map((movie, idx) => (
+                  {recommendedList?.map((movie, idx) => (
                     <div
                       key={idx}
                       className='w-full h-full flex flex-col justify-center items-center text-center'
