@@ -24,14 +24,6 @@ import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const getMovieList = async (params) => {
-  const queryParams = new URLSearchParams(params).toString();
-  const response = await fetch(
-    `${API_URL}/api/v1/movie/recommended?${queryParams}`
-  );
-  return response.json();
-};
-
 const MessageBubble = ({
   speaker,
   message,
@@ -110,6 +102,8 @@ export default function Chat() {
   const [userInput, setUserInput] = useState('');
   const [sendCount, setSendCount] = useState(0);
 
+  const [isPending, setIsPending] = useState(true);
+
   const [satisfy, setSatisfy] = useState(null);
   const [satisfyTrigger, setSatisfyTrigger] = useState(false);
   const [recommendedList, setRecommendedList] = useState([]);
@@ -133,44 +127,52 @@ export default function Chat() {
     speed: 500,
   };
 
-  const { status, isPending, error, data, isFetching } = useQuery({
-    queryKey: ['movieData', searchParams],
-    queryFn: () => getMovieList(searchParams),
-    staleTime: 5 * 1000,
-  });
-
-  useEffect(() => {
-    if (status === 'success') {
-      setRecommendedList(data.data);
-    }
-  }, [status, data]);
+  const [chat, setChat] = useState([]);
 
   useEffect(() => {
     if (
       searchParams.ottList.length > 0 &&
       searchParams.feeling !== '' &&
-      searchParams.situation !== ''
+      searchParams.situation !== '' &&
+      sendCount === 2
     ) {
+      const getMovieList = async (params) => {
+        const queryParams = new URLSearchParams(params).toString();
+
+        axios
+          .get(
+            `${API_URL}/api/v1/movie/recommended?${queryParams}`,
+            queryParams
+          )
+          .then((res) => setRecommendedList(res.data.data));
+      };
+
       getMovieList(searchParams);
     }
   }, [searchParams]);
 
-  const [chat, setChat] = useState([
-    {
-      speaker: 'ai',
-      message: [
-        `${userInfo.name}님 안녕하세요!`,
-        `저는 ${userInfo.name}님에게 최적의 맞춤 콘텐츠 \n추천을 위해 탄생한 이오지오입니다.`,
-        `오늘 ${userInfo.name}님에게 가장 기억에 남는 \n일과 기분을 알려주세요`,
-        '저는 오늘 개발자님에게 혼나서 속상했어요 😭',
-        `${userInfo.name}님은 어떠셨나요?`,
-      ],
-    },
-  ]);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
+      setIsPending(true);
+
+      const timer2 = setTimeout(() => {
+        setChat((prev) => [
+          ...prev,
+          {
+            speaker: 'ai',
+            message: [
+              `${userInfo.name}님 안녕하세요!`,
+              `저는 ${userInfo.name}님에게 최적의 맞춤 콘텐츠 \n추천을 위해 탄생한 이오지오입니다.`,
+              `오늘 ${userInfo.name}님에게 가장 기억에 남는 \n일과 기분을 알려주세요`,
+              '저는 오늘 개발자님에게 혼나서 속상했어요 😭',
+              `${userInfo.name}님은 어떠셨나요?`,
+            ],
+          },
+        ]);
+      }, 500);
+
+      return () => clearTimeout(timer2);
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -282,6 +284,8 @@ export default function Chat() {
   };
 
   const handleClickSend = () => {
+    setIsPending(true);
+
     if (userInput === '' || showIntro || isPending) {
       return;
     }
@@ -294,6 +298,14 @@ export default function Chat() {
     ]);
     setSendCount((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPending(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [chat]);
 
   const handleClickBookmark = (movieData) => {
     if (movieData.isCollected === false) {
