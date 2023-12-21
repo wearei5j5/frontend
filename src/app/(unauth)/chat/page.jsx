@@ -171,7 +171,10 @@ export default function Chat() {
     };
 
     if (sendCount === 1) {
-      setSearchBody((prev) => ({ ...prev, feeling: userInput }));
+      setSearchBody((prev) => ({
+        ...prev,
+        feeling: userInput,
+      }));
       setUserInput('');
 
       sendMessage('ai', [
@@ -184,7 +187,10 @@ export default function Chat() {
     }
 
     if (sendCount === 2) {
-      setSearchBody((prev) => ({ ...prev, situation: userInput }));
+      setSearchBody((prev) => ({
+        ...prev,
+        situation: userInput,
+      }));
       setUserInput('');
 
       sendMessage('ai', [
@@ -303,7 +309,10 @@ export default function Chat() {
 
       const updatedItem = recommendedList.map((item) => {
         if (item.movieName === movieData.movieName) {
-          return { ...item, isCollected: true };
+          return {
+            ...item,
+            isCollected: true,
+          };
         }
         return item;
       });
@@ -425,7 +434,8 @@ export default function Chat() {
           <div className="w-full h-full flex flex-col relative">
             <div className="flex justify-center mb-5 mt-5 w-full">
               <div className="rounded-3xl border-1 font-semibold  text-white py-3 px-4 border-white w-fit">
-                {userInfo.name || '오태'}님을 위한 추천 결과
+                {userInfo.name || '오태'}
+                님을 위한 추천 결과
               </div>
             </div>
             <div className="h-[calc(100%-50px)] flex flex-col justify-between">
