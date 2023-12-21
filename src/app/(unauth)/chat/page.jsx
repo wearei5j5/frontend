@@ -415,6 +415,7 @@ export default function Chat() {
               placeholder="이오지오에게 말해보세요"
               required
               disabled={sendCount >= 2 || showIntro || isPending}
+              maxLength={30}
             />
             <button
               type="button"
