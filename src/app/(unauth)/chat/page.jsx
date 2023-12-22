@@ -18,8 +18,8 @@ dayjs.locale('ko');
 import './_style/style.css';
 import { useQuery } from '@tanstack/react-query';
 
-import BookmarkIcon from '@public/icon-bookmark.svg';
-import BookmarkFullIcon from '@public/icon-bookmark-full.svg';
+import BookmarkIcon from '@public/icons/icon-bookmark.svg';
+import BookmarkFullIcon from '@public/icons/icon-bookmark-full.svg';
 import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -38,7 +38,12 @@ const MessageBubble = ({ speaker, message, isLoading, handleClickSatisfyButton }
         <div key={`${Math.random()}-${index}`} className="w-fit">
           <ChatBubble sender={speaker}>
             <div className="flex items-center justify-center space-x-1">
-              <Image src="/meditation-character.png" alt="character img" width={55} height={55} />
+              <Image
+                src="/imgs/meditation-character.png"
+                alt="character img"
+                width={55}
+                height={55}
+              />
               <div className="font-medium break-keep sm:max-w-fit">
                 {userInfo.name}님에게 딱 맞는 영화 추천 결과
               </div>
@@ -341,7 +346,7 @@ export default function Chat() {
           </div>
           {showIntro ? (
             <div className="h-full w-full mb-10 flex-1 flex flex-col space-y-1.5 justify-center items-center">
-              <Image src="/chat-character.png" width={140} height={140} alt="character img" />
+              <Image src="/imgs/chat-character.png" width={140} height={140} alt="character img" />
               <div className="flex items-center">
                 <div className="text-[#656565] text-sm">이오지오</div>
                 <span className="ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block">
@@ -364,7 +369,7 @@ export default function Chat() {
                     <div key={i} className="flex justify-start">
                       <div className="min-w-[40px]">
                         <Image
-                          src="/chat-character.png"
+                          src="/imgs/chat-character.png"
                           width={40}
                           height={40}
                           alt="character img"
@@ -453,7 +458,7 @@ export default function Chat() {
                             <div className="flex flex-col justify-center items-center h-full">
                               <div className="relative  w-[158px] h-[135px]">
                                 <Image
-                                  src="/null-character.png"
+                                  src="/imgs/null-character.png"
                                   className="w-full grow object-cover"
                                   fill
                                   alt="movie poster null img"

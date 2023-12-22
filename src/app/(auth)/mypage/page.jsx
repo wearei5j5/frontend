@@ -1,22 +1,22 @@
 'use client';
 
-import ArrowLeftIcon from '@public/icon-arrow-left.svg';
+import ArrowLeftIcon from '@public/icons/icon-arrow-left.svg';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Modal from '@/app/_components/Modal';
 import RcSlider from '@/app/(unauth)/info/_components/RcSlider';
 import Image from 'next/image';
 
-import UserIcon from '@public/icon-user.svg';
-import CloseIcon from '@public/icon-close.svg';
-import NetflixIcon from '@public/icon-netflix.svg';
-import TvingIcon from '@public/icon-tving.svg';
-import DisneyPlusIcon from '@public/icon-disney-plus.svg';
-import CoupangPlayIcon from '@public/icon-coupang-play.svg';
-import WatchaIcon from '@public/icon-watcha.svg';
-import WavveIcon from '@public/icon-wavve.svg';
-import AppleTvIcon from '@public/icon-apple-tv.svg';
-import SeeznIcon from '@public/icon-seezn.svg';
+import UserIcon from '@public/icons/icon-user.svg';
+import CloseIcon from '@public/icons/icon-close.svg';
+import NetflixIcon from '@public/icons/icon-netflix.svg';
+import TvingIcon from '@public/icons/icon-tving.svg';
+import DisneyPlusIcon from '@public/icons/icon-disney-plus.svg';
+import CoupangPlayIcon from '@public/icons/icon-coupang-play.svg';
+import WatchaIcon from '@public/icons/icon-watcha.svg';
+import WavveIcon from '@public/icons/icon-wavve.svg';
+import AppleTvIcon from '@public/icons/icon-apple-tv.svg';
+import SeeznIcon from '@public/icons/icon-seezn.svg';
 import axios from 'axios';
 import { userInfoState } from '@/store/userInfo/atom';
 import { useRecoilState } from 'recoil';
