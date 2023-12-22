@@ -8,7 +8,6 @@ export const metadata = {
   icons: {
     icon: '/favicon.ico',
   },
-  manifest: '/manifest.json',
 };
 
 export const viewport = {
