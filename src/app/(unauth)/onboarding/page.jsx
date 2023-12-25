@@ -36,7 +36,7 @@ export default function OnBoarding() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    appendDots: (dots) => <ul>{dots}</ul>,
+    // appendDots: (dots) => <ul>{dots}</ul>,
     dotsClass: 'dots-custom',
   };
 
