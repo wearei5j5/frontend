@@ -3,7 +3,7 @@
 import { isFirstState } from '@/store/initInfo/atom';
 import Slider from 'react-slick';
 
-import ArrowLeftIcon from '@public/icon-arrow-left.svg';
+import ArrowLeftIcon from '@public/icons/icon-arrow-left.svg';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -13,14 +13,14 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import NetflixIcon from '@public/icon-netflix.svg';
-import TvingIcon from '@public/icon-tving.svg';
-import DisneyPlusIcon from '@public/icon-disney-plus.svg';
-import CoupangPlayIcon from '@public/icon-coupang-play.svg';
-import WatchaIcon from '@public/icon-watcha.svg';
-import WavveIcon from '@public/icon-wavve.svg';
-import AppleTvIcon from '@public/icon-apple-tv.svg';
-import SeeznIcon from '@public/icon-seezn.svg';
+import NetflixIcon from '@public/icons/icon-netflix.svg';
+import TvingIcon from '@public/icons/icon-tving.svg';
+import DisneyPlusIcon from '@public/icons/icon-disney-plus.svg';
+import CoupangPlayIcon from '@public/icons/icon-coupang-play.svg';
+import WatchaIcon from '@public/icons/icon-watcha.svg';
+import WavveIcon from '@public/icons/icon-wavve.svg';
+import AppleTvIcon from '@public/icons/icon-apple-tv.svg';
+import SeeznIcon from '@public/icons/icon-seezn.svg';
 
 import RcSlider from './_components/RcSlider';
 import { userInfoState } from '@/store/userInfo/atom';

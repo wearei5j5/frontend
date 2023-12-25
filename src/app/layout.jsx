@@ -8,6 +8,7 @@ export const metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  manifest: '/manifest.json',
 };
 
 export const viewport = {
@@ -20,7 +21,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body suppressHydrationWarning={true}>
         <RecoilRootProvider>
           <TanstackProvider>{children}</TanstackProvider>
