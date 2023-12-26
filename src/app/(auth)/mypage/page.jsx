@@ -152,7 +152,7 @@ export default function Mypage() {
   return (
     <>
       <header className="px-4 py-2 sm:px-5 flex items-center">
-        <ArrowLeftIcon className="cursor-pointer" onClick={() => router.back()} />
+        <ArrowLeftIcon className="cursor-pointer" onClick={() => router.push('/')} />
         <div className="ml-1 text-lg font-bold">My page</div>
       </header>
       <div className="flex flex-col divide-y-6 divide-b100 h-[calc(100%-64px)] overflow-y-auto">

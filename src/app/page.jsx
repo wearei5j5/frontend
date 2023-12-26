@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { isFirstState } from '@/store/initInfo/atom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Link from 'next/link';
 

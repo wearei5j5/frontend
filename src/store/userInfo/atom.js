@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { localStorageEffect } from '../recoilEffect';
 
 export const userInfoState = atom({
   key: 'userInfoState',
@@ -8,4 +9,5 @@ export const userInfoState = atom({
     ottList: [],
     profileImageUrl: '',
   },
+  effects: [localStorageEffect('user_info')],
 });

@@ -10,8 +10,7 @@ import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useRecoilValue } from 'recoil';
-import { isFirstState } from '@/store/initInfo/atom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,9 +25,6 @@ export default function OnBoarding() {
     return () => clearTimeout(timer);
   }, []);
 
-  const isFirst = useRecoilValue(isFirstState);
-  console.log('isFirst?', isFirst);
-
   const settings = {
     dots: true,
     infinite: true,
@@ -36,7 +32,6 @@ export default function OnBoarding() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    // appendDots: (dots) => <ul>{dots}</ul>,
     dotsClass: 'dots-custom',
   };
 
@@ -88,7 +83,7 @@ export default function OnBoarding() {
               className="cursor-pointer text-sm w-full bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative"
             >
               카카오톡으로 시작하기
-              <KakaoIcon className="absolute top-4 left-5" />
+              <KakaoIcon className="absolute top-3 left-5" />
             </div>
 
             <Link

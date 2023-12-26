@@ -44,9 +44,9 @@ export default function KakaoLogin() {
               },
             },
           );
-          router.push(redirectUrl);
+          router.replace(redirectUrl);
         } else {
-          router.push('/login');
+          router.replace('/login');
         }
       })
       .catch((error) => {
