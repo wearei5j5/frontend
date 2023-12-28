@@ -11,6 +11,7 @@ import Logo from '@public/icons/logo-otte.svg';
 import MypageIcon from '@public/icons/icon-mypage.svg';
 import Image from 'next/image';
 import SplashScreen from './_components/SplashScreen';
+import Button from './_components/Button';
 
 export default function Home() {
   const [welcomeText, setWelcomeText] = useState('반가워요 저는 이오지오에요');
@@ -75,19 +76,21 @@ export default function Home() {
         </div>
 
         <div className=" px-6 py-6 flex flex-col">
-          <Link
+          <Button
+            isLink={true}
             href="/chat"
-            className="w-full bg-main rounded-lg text-white py-3.5 text-center font-medium"
-          >
-            이오지오와 대화 시작하기
-          </Link>
-
-          <Link
+            textColor="text-white"
+            bgColor="bg-main"
+            text="이오지오와 대화 시작하기"
+          />
+          <Button
+            isLink={true}
             href="/mypage"
-            className="w-full bg-v100 rounded-lg text-white py-3.5 text-center mt-3 font-medium"
-          >
-            나의 콘텐츠 노트 보러가기
-          </Link>
+            textColor="text-white"
+            bgColor="bg-v100"
+            text="나의 콘텐츠 노트 보러가기"
+            styleClass="mt-3"
+          />
         </div>
       </div>
     </>

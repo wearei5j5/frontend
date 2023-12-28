@@ -7,6 +7,8 @@ import Link from 'next/link';
 import SplashScreen from '@/app/_components/SplashScreen';
 import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 
+import Button from '@/app/_components/Button';
+
 import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -78,20 +80,23 @@ export default function OnBoarding() {
           </div>
 
           <div className="flex flex-col items-center">
-            <div
+            <Button
+              bgColor="bg-[#FEE500]"
+              textColor="text-black"
               onClick={handleKakaoLogin}
-              className="cursor-pointer text-sm w-full bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative"
-            >
-              카카오톡으로 시작하기
-              <KakaoIcon className="absolute top-3 left-5" />
-            </div>
-
-            <Link
+              icon={<KakaoIcon className="absolute top-3 left-5" />}
+              text="카카오톡으로 시작하기"
+              isLink={false}
+            />
+            <Button
+              isLink={true}
               href="/info"
-              className="cursor-pointer text-sm w-full bg-main rounded-lg text-white py-3.5 text-center mt-3 font-medium"
-            >
-              로그인 없이 사용하기
-            </Link>
+              textColor="text-white"
+              bgColor="bg-main"
+              text="로그인 없이 사용하기"
+              styleClass="mt-3"
+            />
+
             <div className="mt-3 px-4 py-2.5 bg-[#BFBFBF] text-white text-xs text-center rounded-2xl w-fit relative before:border-[#BFBFBF] before:w-0 before:h-0 before:border-l-[4px] before:border-l-transparent before:border-b-[5px]  before:border-r-[4px] before:border-r-transparent before:absolute before:bottom-9 before:left-1/2">
               ⚠️나의 OTT 콘텐츠 수첩 기능을 사용할 수 없어요️⚠️
             </div>

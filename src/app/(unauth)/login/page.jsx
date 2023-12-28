@@ -3,6 +3,7 @@
 import Logo from '@public/icons/logo-otte.svg';
 import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 import Image from 'next/image';
+import Button from '@/app/_components/Button';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,13 +23,14 @@ export default function Login() {
         <Image src="/imgs/home-character.png" alt="character img" fill />
       </div>
       <div className="w-full px-5">
-        <div
+        <Button
+          bgColor="bg-[#FEE500]"
+          textColor="text-black"
           onClick={handleKakaoLogin}
-          className="w-full cursor-pointer text-sm bg-[#FEE500] rounded-lg py-3.5 text-center text-black font-medium relative"
-        >
-          카카오톡으로 시작하기
-          <KakaoIcon className="absolute top-3 left-5" />
-        </div>
+          icon={<KakaoIcon className="absolute top-3 left-5" />}
+          text="카카오톡으로 시작하기"
+          isLink={false}
+        />
       </div>
     </div>
   );
