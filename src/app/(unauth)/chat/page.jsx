@@ -164,7 +164,8 @@ export default function Chat() {
       searchBody.ottList.length > 0 &&
       searchBody.feeling !== '' &&
       searchBody.situation !== '' &&
-      sendCount === 2
+      searchBody.genre !== '' &&
+      sendCount === 3
     ) {
       const getMovieList = async () => {
         axios
@@ -226,11 +227,10 @@ export default function Chat() {
     }
 
     if (sendCount === 2) {
-      setSearchBody((prev) => ({
-        ...prev,
-        feeling: userInput,
-      }));
-      setUserInput('');
+      // setSearchBody((prev) => ({
+      //   ...prev,
+      //   feeling: userInput,
+      // }));
 
       sendMessage('ai', [
         `oo님, 지금 어떤 장르의 영화를 보고 싶으세요?`,
@@ -298,6 +298,60 @@ export default function Chat() {
       }
     }
   }, [satisfy]);
+
+  useEffect(() => {
+    if (searchBody.feeling !== '' && sendCount === 2) {
+      setIsPending(true);
+
+      switch (searchBody.feeling) {
+        case 'HAPPY':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😍 행복해요'],
+            },
+          ]);
+          break;
+        case 'FUNNY':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😆 즐거워요'],
+            },
+          ]);
+          break;
+        case 'SAD':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😭 슬퍼요'],
+            },
+          ]);
+          break;
+        case 'ANGRY':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😤 화나요'],
+            },
+          ]);
+          break;
+        case 'TIRED':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😒 피곤해요'],
+            },
+          ]);
+          break;
+      }
+    }
+  }, [searchBody]);
 
   useEffect(() => {
     if (!messageEndRef.current) return;
@@ -473,13 +527,15 @@ export default function Chat() {
               className="bg-white border border-gray-300 text-gray-900 text-sm w-full py-2 pl-5 pr-20 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block leading-7 placeholder:leading-7"
               placeholder="이오지오에게 말해보세요"
               required
-              disabled={sendCount >= 2 || showIntro || isPending}
+              disabled={sendCount >= 3 || sendCount === 1 || showIntro || isPending}
               maxLength={30}
             />
             <button
               type="button"
               onClick={handleClickSend}
-              disabled={userInput === '' || sendCount >= 2 || showIntro || isPending}
+              disabled={
+                userInput === '' || sendCount >= 3 || sendCount == 1 || showIntro || isPending
+              }
               className={
                 'text-white absolute end-3 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 disabled:bg-gray-300  disabled:cursor-not-allowed'
               }
