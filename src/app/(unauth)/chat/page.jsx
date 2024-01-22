@@ -84,34 +84,34 @@ const MessageBubble = ({
     }
     if (text === 'feeling') {
       return (
-        <div key={`${Math.random()}-${index}`} className="flex space-x-1.5 flex-wrap">
+        <div key={`${Math.random()}-${index}`} className="flex flex-wrap mb-2">
           <button
-            onClick={() => handleClickFeelingButton('HAPPY')}
-            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap"
+            onClick={() => handleClickFeelingButton('행복해요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😍 행복해요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('FUNNY')}
-            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap"
+            onClick={() => handleClickFeelingButton('즐거워요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😆 즐거워요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('SAD')}
-            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white"
+            onClick={() => handleClickFeelingButton('슬퍼요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😭 슬퍼요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('ANGRY')}
-            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap"
+            onClick={() => handleClickFeelingButton('화나요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😤 화나요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('TIRED')}
-            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap"
+            onClick={() => handleClickFeelingButton('피곤해요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mt-1"
           >
             😒 피곤해요
           </button>
@@ -143,6 +143,8 @@ export default function Chat() {
     feeling: '',
     genre: '',
   });
+
+  console.log('searchBody', searchBody);
 
   const messageEndRef = useRef(null);
 
@@ -227,13 +229,8 @@ export default function Chat() {
     }
 
     if (sendCount === 2) {
-      // setSearchBody((prev) => ({
-      //   ...prev,
-      //   feeling: userInput,
-      // }));
-
       sendMessage('ai', [
-        `oo님, 지금 어떤 장르의 영화를 보고 싶으세요?`,
+        `${userInfo.name || '오태'}님, 지금 어떤 장르의 영화를 보고 싶으세요?`,
         '액션? 로맨스? 스릴러?',
         ,
       ]);

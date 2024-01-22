@@ -169,21 +169,21 @@ export default function Mypage() {
               className="flex flex-col justify-center grow w-full py-2.5 sm:py-5 px-5 shadow-mypage rounded-2xl cursor-pointer"
             >
               <div className="mb-2 text-3xl">✏️</div>
-              <div className="text-xs text-g100 font-semibold">이름 수정</div>
+              <div className="text-xs text-g100 font-semibold break-keep">이름 수정</div>
             </div>
             <div
               onClick={() => setOpenModal((prev) => ({ ...prev, isAge: true }))}
               className="flex flex-col justify-center grow w-full py-2.5 sm:py-5 px-5 shadow-mypage rounded-2xl cursor-pointer"
             >
               <div className="mb-2 text-3xl">⏳</div>
-              <div className="text-xs text-g100 font-semibold">연령 수정</div>
+              <div className="text-xs text-g100 font-semibold break-keep">연령 수정</div>
             </div>
             <div
               onClick={() => setOpenModal((prev) => ({ ...prev, isSubscribe: true }))}
               className="flex flex-col justify-center grow w-full py-2.5 sm:py-5 px-5 shadow-mypage rounded-2xl cursor-pointer"
             >
               <div className="mb-2 text-3xl">🎬</div>
-              <div className="text-xs text-g100 font-semibold">구독정보 수정</div>
+              <div className="text-xs text-g100 font-semibold break-keep">구독정보 수정</div>
             </div>
           </div>
         </div>

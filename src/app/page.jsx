@@ -36,14 +36,14 @@ export default function Home() {
     <SplashScreen />
   ) : (
     <>
-      <header className="h-16 w-full py-2 px-5 flex items-center justify-between">
+      <div className="h-16 w-full py-2 px-5 flex items-center justify-between">
         <Link href="/">
           <Logo width="64" height="100%" className="cursor-pointer" />
         </Link>
         <Link href="/mypage">
           <MypageIcon className="cursor-pointer " />
         </Link>
-      </header>
+      </div>
       <div className="flex flex-col justify-between h-[calc(100%-64px)] pt-8 sm:pt-10 overflow-y-auto">
         <div>
           <div className="flex justify-center text-center text-g200 text-xl mb-6 sm:mb-10">

@@ -1,9 +1,7 @@
 export default function ChatBubble(props) {
   return (
     <div
-      className={`flex flex-col my-2 w-fit ${
-        props.sender === 'ai' ? 'items-start' : 'items-end'
-      }`}
+      className={`flex flex-col my-2 w-fit ${props.sender === 'ai' ? 'items-start' : 'items-end'}`}
     >
       <div
         className={`px-3 py-1.5 break-keep text-sm
@@ -16,9 +14,9 @@ export default function ChatBubble(props) {
         {props.children ? (
           props.children
         ) : (
-          <div className='break-all'>
+          <div className="break-all">
             {props.message.split('\n').map((line, i) => (
-              <span key={i} className='break-all'>
+              <span key={i} className="break-all">
                 {line}
                 <br />
               </span>
