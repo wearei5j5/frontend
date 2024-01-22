@@ -144,8 +144,6 @@ export default function Chat() {
     genre: '',
   });
 
-  console.log('searchBody', searchBody);
-
   const messageEndRef = useRef(null);
 
   const today = dayjs(new Date()).format('YYYY년 MM월 DD일 (dd)');
