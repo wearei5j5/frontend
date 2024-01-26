@@ -159,7 +159,14 @@ export default function Mypage() {
         <div className="px-5 pb-5 flex flex-col items-center">
           <div className="w-[55px] h-[55px] bg-g50 flex justify-center items-center rounded-2.5xl overflow-hidden relative">
             {/* <UserIcon /> */}
-            <Image src={userInfo.profileImageUrl} alt="profile img" fill />
+            {userInfo?.profileImageUrl && (
+              <Image
+                src={userInfo?.profileImageUrl}
+                alt="profile img"
+                className="w-full h-full object-cover"
+                fill
+              />
+            )}
           </div>
           <div className="text-lg text-g400 font-semibold mt-1">{userInfo.name}님</div>
           <div className="text-sm text-g75">{userInfo.age}세</div>
