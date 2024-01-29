@@ -1,6 +1,7 @@
 import './globals.css';
 import RecoilRootProvider from '@/util/recoilRootProvider';
 import TanstackProvider from '@/util/tanstackProvider';
+import MixpanelProvider from './_components/MixpanelProvider';
 
 export const metadata = {
   title: 'OTTE',
@@ -8,6 +9,7 @@ export const metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  manifest: '/manifest.json',
 };
 
 export const viewport = {
@@ -20,11 +22,13 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body suppressHydrationWarning={true}>
-        <RecoilRootProvider>
-          <TanstackProvider>{children}</TanstackProvider>
-        </RecoilRootProvider>
+        <MixpanelProvider>
+          <RecoilRootProvider>
+            <TanstackProvider>{children}</TanstackProvider>
+          </RecoilRootProvider>
+        </MixpanelProvider>
       </body>
     </html>
   );

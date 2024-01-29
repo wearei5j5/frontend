@@ -18,13 +18,19 @@ dayjs.locale('ko');
 import './_style/style.css';
 import { useQuery } from '@tanstack/react-query';
 
-import BookmarkIcon from '@public/icon-bookmark.svg';
-import BookmarkFullIcon from '@public/icon-bookmark-full.svg';
+import BookmarkIcon from '@public/icons/icon-bookmark.svg';
+import BookmarkFullIcon from '@public/icons/icon-bookmark-full.svg';
 import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const MessageBubble = ({ speaker, message, isLoading, handleClickSatisfyButton }) => {
+const MessageBubble = ({
+  speaker,
+  message,
+  isLoading,
+  handleClickSatisfyButton,
+  handleClickFeelingButton,
+}) => {
   const userInfo = useRecoilValue(userInfoState);
   const setOpen = useSetRecoilState(modalState);
 
@@ -38,7 +44,12 @@ const MessageBubble = ({ speaker, message, isLoading, handleClickSatisfyButton }
         <div key={`${Math.random()}-${index}`} className="w-fit">
           <ChatBubble sender={speaker}>
             <div className="flex items-center justify-center space-x-1">
-              <Image src="/meditation-character.png" alt="character img" width={55} height={55} />
+              <Image
+                src="/imgs/meditation-character.png"
+                alt="character img"
+                width={55}
+                height={55}
+              />
               <div className="font-medium break-keep sm:max-w-fit">
                 {userInfo.name}님에게 딱 맞는 영화 추천 결과
               </div>
@@ -71,6 +82,42 @@ const MessageBubble = ({ speaker, message, isLoading, handleClickSatisfyButton }
         </div>
       );
     }
+    if (text === 'feeling') {
+      return (
+        <div key={`${Math.random()}-${index}`} className="flex flex-wrap mb-2">
+          <button
+            onClick={() => handleClickFeelingButton('행복해요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
+          >
+            😍 행복해요
+          </button>
+          <button
+            onClick={() => handleClickFeelingButton('즐거워요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
+          >
+            😆 즐거워요
+          </button>
+          <button
+            onClick={() => handleClickFeelingButton('슬퍼요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
+          >
+            😭 슬퍼요
+          </button>
+          <button
+            onClick={() => handleClickFeelingButton('화나요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
+          >
+            😤 화나요
+          </button>
+          <button
+            onClick={() => handleClickFeelingButton('피곤해요')}
+            className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mt-1"
+          >
+            😒 피곤해요
+          </button>
+        </div>
+      );
+    }
 
     return <ChatBubble key={`${Math.random()}-${index}`} sender={speaker} message={text} />;
   });
@@ -92,8 +139,9 @@ export default function Chat() {
 
   const [searchBody, setSearchBody] = useState({
     ottList: userInfo.ottList,
-    feeling: '',
     situation: '',
+    feeling: '',
+    genre: '',
   });
 
   const messageEndRef = useRef(null);
@@ -116,7 +164,8 @@ export default function Chat() {
       searchBody.ottList.length > 0 &&
       searchBody.feeling !== '' &&
       searchBody.situation !== '' &&
-      sendCount === 2
+      searchBody.genre !== '' &&
+      sendCount === 3
     ) {
       const getMovieList = async () => {
         axios
@@ -139,13 +188,10 @@ export default function Chat() {
           {
             speaker: 'ai',
             message: [
-              `${userInfo.name || '오태'}님 안녕하세요!`,
-              `저는 ${
+              `안녕하세요 ${userInfo.name || '오태'}님! \n저는 ${
                 userInfo.name || '오태'
-              }님에게 최적의 맞춤 콘텐츠 \n추천을 위해 탄생한 이오지오입니다.`,
-              `오늘 ${userInfo.name || '오태'}님에게 가장 기억에 남는 \n일과 기분을 알려주세요`,
-              '저는 오늘 개발자님에게 혼나서 속상했어요 😭',
-              `${userInfo.name || '오태'}님은 어떠셨나요?`,
+              }님에게 최적의 맞춤 영화 추천을 위해 탄생한 이오지오입니다.`,
+              `${userInfo.name || '오태'}님, 오늘 하루 어떠셨나요?`,
             ],
           },
         ]);
@@ -171,27 +217,35 @@ export default function Chat() {
     };
 
     if (sendCount === 1) {
-      setSearchBody((prev) => ({ ...prev, feeling: userInput }));
+      setSearchBody((prev) => ({
+        ...prev,
+        situation: userInput,
+      }));
       setUserInput('');
 
-      sendMessage('ai', [
-        `${
-          userInfo.name || '오태'
-        }님의 얘기를 들어보니, 어떤 콘텐츠를 \n추천해드릴지 가닥이 잡히는 것 같아요.`,
-        '지금 어떤 느낌의 영화가 보고 싶으신가요?',
-        '저는.. 오늘 제 마음을 위로해주는 \n힐링 영화가 필요해요.',
-      ]);
+      sendMessage('ai', ['그렇다면 지금 기분은 어떠세요?', 'feeling']);
     }
 
     if (sendCount === 2) {
-      setSearchBody((prev) => ({ ...prev, situation: userInput }));
+      sendMessage('ai', [
+        `${userInfo.name || '오태'}님, 지금 어떤 장르의 영화를 보고 싶으세요?`,
+        '액션? 로맨스? 스릴러?',
+        ,
+      ]);
+    }
+
+    if (sendCount === 3) {
+      setSearchBody((prev) => ({
+        ...prev,
+        genre: userInput,
+      }));
       setUserInput('');
 
       sendMessage('ai', [
         `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
+        '잠시만 기다려주세요!',
         '',
-        '어때요? 이오지오가 피땀흘려 찾아온 영화랍니다!',
-        `이오지오의 ${userInfo.name || '오태'}님만을 위한 콘텐츠 추천, 오때?`,
+        `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
         'satisfy',
       ]);
     }
@@ -218,27 +272,81 @@ export default function Chat() {
           ...prev,
           {
             speaker: 'user',
-            message: ['너무 좋아! 추천 고마워'],
+            message: ['오 괜찮은데?'],
           },
         ]);
 
         sendMessage('ai', [
-          '제가 추천드린 영화가 만족스러우신 것 같아 다행이에요!',
-          '그럼 다음에 또 봐요!',
+          '제가 추천드린 영화가 만족스러우신 것 같아 감격입니다...',
+          '다음에도 또 찾아주세요! ',
         ]);
       } else {
         setChat((prev) => [
           ...prev,
           {
             speaker: 'user',
-            message: ['음..끌리지않는 것 같아'],
+            message: ['아..조금 아쉬워..'],
           },
         ]);
 
-        sendMessage('ai', ['다음에는 더... 노력해보겠습니다....😭 ', '그럼 다음에 또 봐요!']);
+        sendMessage('ai', ['정말 죄송합니다...', '다음에는 더... 노력해보겠습니다....😭 ']);
       }
     }
   }, [satisfy]);
+
+  useEffect(() => {
+    if (searchBody.feeling !== '' && sendCount === 2) {
+      setIsPending(true);
+
+      switch (searchBody.feeling) {
+        case 'HAPPY':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😍 행복해요'],
+            },
+          ]);
+          break;
+        case 'FUNNY':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😆 즐거워요'],
+            },
+          ]);
+          break;
+        case 'SAD':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😭 슬퍼요'],
+            },
+          ]);
+          break;
+        case 'ANGRY':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😤 화나요'],
+            },
+          ]);
+          break;
+        case 'TIRED':
+          setChat((prev) => [
+            ...prev,
+            {
+              speaker: 'user',
+              message: ['😒 피곤해요'],
+            },
+          ]);
+          break;
+      }
+    }
+  }, [searchBody]);
 
   useEffect(() => {
     if (!messageEndRef.current) return;
@@ -250,6 +358,11 @@ export default function Chat() {
     if (satisfy === null) {
       setSatisfy(review);
     }
+  };
+
+  const handleClickFeelingButton = (feeling) => {
+    setSearchBody((prev) => ({ ...prev, feeling }));
+    setSendCount((prev) => prev + 1);
   };
 
   const handleModalClose = () => {
@@ -303,7 +416,10 @@ export default function Chat() {
 
       const updatedItem = recommendedList.map((item) => {
         if (item.movieName === movieData.movieName) {
-          return { ...item, isCollected: true };
+          return {
+            ...item,
+            isCollected: true,
+          };
         }
         return item;
       });
@@ -332,7 +448,7 @@ export default function Chat() {
           </div>
           {showIntro ? (
             <div className="h-full w-full mb-10 flex-1 flex flex-col space-y-1.5 justify-center items-center">
-              <Image src="/chat-character.png" width={140} height={140} alt="character img" />
+              <Image src="/imgs/chat-character.png" width={140} height={140} alt="character img" />
               <div className="flex items-center">
                 <div className="text-[#656565] text-sm">이오지오</div>
                 <span className="ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block">
@@ -355,7 +471,7 @@ export default function Chat() {
                     <div key={i} className="flex justify-start">
                       <div className="min-w-[40px]">
                         <Image
-                          src="/chat-character.png"
+                          src="/imgs/chat-character.png"
                           width={40}
                           height={40}
                           alt="character img"
@@ -373,6 +489,7 @@ export default function Chat() {
                           message={item.message}
                           isLoading={isPending && i === chat.length - 1} // 마지막 메시지만 로딩 상태 적용
                           handleClickSatisfyButton={handleClickSatisfyButton}
+                          handleClickFeelingButton={handleClickFeelingButton}
                         />
                       </div>
                     </div>
@@ -405,12 +522,15 @@ export default function Chat() {
               className="bg-white border border-gray-300 text-gray-900 text-sm w-full py-2 pl-5 pr-20 rounded-xl max-h-12 h-12 align-middle focus:border-main focus:outline-none inline-block leading-7 placeholder:leading-7"
               placeholder="이오지오에게 말해보세요"
               required
-              disabled={sendCount >= 2 || showIntro || isPending}
+              disabled={sendCount >= 3 || sendCount === 1 || showIntro || isPending}
+              maxLength={30}
             />
             <button
               type="button"
               onClick={handleClickSend}
-              disabled={userInput === '' || sendCount >= 2 || showIntro || isPending}
+              disabled={
+                userInput === '' || sendCount >= 3 || sendCount == 1 || showIntro || isPending
+              }
               className={
                 'text-white absolute end-3 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 disabled:bg-gray-300  disabled:cursor-not-allowed'
               }
@@ -425,7 +545,8 @@ export default function Chat() {
           <div className="w-full h-full flex flex-col relative">
             <div className="flex justify-center mb-5 mt-5 w-full">
               <div className="rounded-3xl border-1 font-semibold  text-white py-3 px-4 border-white w-fit">
-                {userInfo.name || '오태'}님을 위한 추천 결과
+                {userInfo.name || '오태'}
+                님을 위한 추천 결과
               </div>
             </div>
             <div className="h-[calc(100%-50px)] flex flex-col justify-between">
@@ -442,7 +563,7 @@ export default function Chat() {
                             <div className="flex flex-col justify-center items-center h-full">
                               <div className="relative  w-[158px] h-[135px]">
                                 <Image
-                                  src="/null-character.png"
+                                  src="/imgs/null-character.png"
                                   className="w-full grow object-cover"
                                   fill
                                   alt="movie poster null img"

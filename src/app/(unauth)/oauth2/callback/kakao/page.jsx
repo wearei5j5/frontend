@@ -42,11 +42,11 @@ export default function KakaoLogin() {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
               },
-            }
+            },
           );
-          router.push(redirectUrl);
+          router.replace(redirectUrl);
         } else {
-          router.push('/login');
+          router.replace('/login');
         }
       })
       .catch((error) => {
