@@ -20,6 +20,7 @@ import SeeznIcon from '@public/icons/icon-seezn.svg';
 import axios from 'axios';
 import { userInfoState } from '@/store/userInfo/atom';
 import { useRecoilState } from 'recoil';
+import mixpanel from 'mixpanel-browser';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -128,6 +129,10 @@ export default function Mypage() {
     if (window.localStorage.getItem('access_token') === null) {
       redirect('/login');
     }
+
+    mixpanel.track_pageview({
+      page: 'Mypage',
+    });
 
     axios
       .get(`${API_URL}/api/v1/movie`, {

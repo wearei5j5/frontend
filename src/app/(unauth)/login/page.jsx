@@ -4,6 +4,8 @@ import Logo from '@public/icons/logo-otte.svg';
 import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 import Image from 'next/image';
 import Button from '@/app/_components/Button';
+import { useEffect } from 'react';
+import mixpanel from 'mixpanel-browser';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -11,6 +13,12 @@ export default function Login() {
   const handleKakaoLogin = () => {
     window.location.href = `${API_URL}/oauth2/code/kakao?state=/mypage`;
   };
+
+  useEffect(() => {
+    mixpanel.track_pageview({
+      page: 'Sign in',
+    });
+  }, []);
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
