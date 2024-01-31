@@ -14,12 +14,6 @@ export default function Login() {
     window.location.href = `${API_URL}/oauth2/code/kakao?state=/mypage`;
   };
 
-  useEffect(() => {
-    mixpanel.track_pageview({
-      page: 'Sign in',
-    });
-  }, []);
-
   return (
     <div className="h-full flex flex-col justify-center items-center">
       <div className="mb-2.5">

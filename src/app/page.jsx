@@ -23,12 +23,6 @@ export default function Home() {
   const isFirst = useRecoilValue(isFirstState);
 
   useEffect(() => {
-    mixpanel.track_pageview({
-      page: 'Home',
-    });
-  }, []);
-
-  useEffect(() => {
     if (isFirst) {
       redirect('/onboarding');
     }

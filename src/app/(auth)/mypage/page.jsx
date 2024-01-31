@@ -130,10 +130,6 @@ export default function Mypage() {
       redirect('/login');
     }
 
-    mixpanel.track_pageview({
-      page: 'Mypage',
-    });
-
     axios
       .get(`${API_URL}/api/v1/movie`, {
         headers: {
