@@ -9,7 +9,6 @@ const MixpanelProvider = ({ children }) => {
   useEffect(() => {
     mixpanel.init(MIXPANEL_TOKEN, {
       api_host: PROXIED_DOMAIN,
-      debug: true,
     });
   }, []);
 
