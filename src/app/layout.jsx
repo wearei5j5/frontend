@@ -5,6 +5,7 @@ import MixpanelProvider from './_components/MixpanelProvider';
 import GTMProvider from './_components/GTMProvider';
 import TagManager from 'react-gtm-module';
 import Script from 'next/script';
+import { GoogleTagManager } from '@next/third-parties/google';
 
 const GTM_CODE = `GTM-${process.env.NEXT_PUBLIC_GTM_CODE}`;
 
@@ -32,12 +33,11 @@ export default function RootLayout({ children }) {
         <Script async src="https://www.googletagmanager.com/gtag/js?id=GA-MEASUREMENT-ID" />
       </head>
       <body suppressHydrationWarning={true}>
-        <GTMProvider>
-          <RecoilRootProvider>
-            <TanstackProvider>{children}</TanstackProvider>
-          </RecoilRootProvider>
-        </GTMProvider>
+        <RecoilRootProvider>
+          <TanstackProvider>{children}</TanstackProvider>
+        </RecoilRootProvider>
       </body>
+      <GoogleTagManager gtmId={GTM_CODE} />
     </html>
   );
 }
