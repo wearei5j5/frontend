@@ -91,8 +91,6 @@ export default function Info() {
 
   const handleNextButton = () => {
     if (slideIndex === 2) {
-      setIsFirst(false);
-
       if (localStorage.getItem('access_token')) {
         axios.post(
           `${API_URL}/api/v1/user`,
