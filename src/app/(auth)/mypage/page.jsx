@@ -151,7 +151,7 @@ export default function Mypage() {
   }, []);
 
   return (
-    <>
+    <div>
       <header className="px-4 py-2 sm:px-5 flex items-center">
         <ArrowLeftIcon className="cursor-pointer" onClick={() => router.push('/')} />
         <div className="ml-1 text-lg font-bold">My page</div>
@@ -398,6 +398,6 @@ export default function Mypage() {
           </div>
         </Modal>
       )}
-    </>
+    </div>
   );
 }
