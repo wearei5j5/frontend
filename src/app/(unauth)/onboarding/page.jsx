@@ -12,12 +12,14 @@ import Button from '@/app/_components/Button';
 import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@/store/userInfo/atom';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function OnBoarding() {
   const [showSplash, setShowSplash] = useState(true);
+  const userInfo = useRecoilValue(userInfoState);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -90,7 +92,7 @@ export default function OnBoarding() {
             />
             <Button
               isLink={true}
-              href="/info"
+              href={userInfo ? '/info' : '/'}
               textColor="text-white"
               bgColor="bg-main"
               text="로그인 없이 사용하기"

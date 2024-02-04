@@ -44,7 +44,7 @@ export default function KakaoLogin() {
               },
             },
           );
-          router.replace(redirectUrl);
+          router.replace(userInfo ? '/' : redirectUrl);
         } else {
           router.replace('/login');
         }
