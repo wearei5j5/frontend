@@ -1,6 +1,6 @@
 'use client';
 
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { isFirstState } from '@/store/initInfo/atom';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -12,19 +12,17 @@ import MypageIcon from '@public/icons/icon-mypage.svg';
 import Image from 'next/image';
 import SplashScreen from './_components/SplashScreen';
 import Button from './_components/Button';
-import mixpanel from 'mixpanel-browser';
-
-const PROXIED_DOMAIN = process.env.NEXT_PUBLIC_PROXIED_DOMAIN;
-const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 
 export default function Home() {
   const [welcomeText, setWelcomeText] = useState('반가워요 저는 이오지오에요');
+  const router = useRouter();
 
   const isFirst = useRecoilValue(isFirstState);
 
   useEffect(() => {
     if (isFirst) {
-      redirect('/onboarding');
+      router.prefetch('/onboarding');
+      router.push('/onboarding');
     }
   }, [isFirst]);
 
