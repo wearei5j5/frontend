@@ -86,31 +86,31 @@ const MessageBubble = ({
       return (
         <div key={`${Math.random()}-${index}`} className="flex flex-wrap mb-2">
           <button
-            onClick={() => handleClickFeelingButton('행복해요')}
+            onClick={() => handleClickFeelingButton('HAPPY')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😍 행복해요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('즐거워요')}
+            onClick={() => handleClickFeelingButton('FUNNY')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😆 즐거워요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('슬퍼요')}
+            onClick={() => handleClickFeelingButton('SAD')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😭 슬퍼요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('화나요')}
+            onClick={() => handleClickFeelingButton('ANGRY')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😤 화나요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('피곤해요')}
+            onClick={() => handleClickFeelingButton('TIRED')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mt-1"
           >
             😒 피곤해요
@@ -160,6 +160,18 @@ export default function Chat() {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
+    const sendMessage = (speaker, messages) => {
+      setTimeout(() => {
+        setChat((prev) => [
+          ...prev,
+          {
+            speaker,
+            message: messages,
+          },
+        ]);
+      }, 1000);
+    };
+
     if (
       searchBody.ottList.length > 0 &&
       searchBody.feeling !== '' &&
@@ -167,10 +179,30 @@ export default function Chat() {
       searchBody.genre !== '' &&
       sendCount === 3
     ) {
+      setIsPending(true);
+
       const getMovieList = async () => {
         axios
           .post(`${API_URL}/api/v1/movie/recommended`, searchBody)
-          .then((res) => setRecommendedList(res.data.data));
+          .then((res) => {
+            setRecommendedList(res.data.data);
+            sendMessage('ai', [
+              `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
+              '잠시만 기다려주세요!',
+              '',
+              `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
+              'satisfy',
+            ]);
+          })
+          .catch((error) => {
+            if (error.response.data.message === '호출 횟수를 초과했습니다') {
+              sendMessage('ai', ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!']);
+            }
+          })
+          .finally(() => {
+            setUserInput('');
+            setIsPending(false);
+          });
       };
 
       getMovieList();
@@ -240,14 +272,6 @@ export default function Chat() {
         genre: userInput,
       }));
       setUserInput('');
-
-      sendMessage('ai', [
-        `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
-        '잠시만 기다려주세요!',
-        '',
-        `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
-        'satisfy',
-      ]);
     }
   }, [sendCount]);
 
@@ -266,6 +290,7 @@ export default function Chat() {
 
     if (satisfy !== null) {
       axios.post(`${API_URL}/api/v1/review`, { satisfaction: satisfy });
+      setIsPending(true);
 
       if (satisfy === 'GOOD') {
         setChat((prev) => [
