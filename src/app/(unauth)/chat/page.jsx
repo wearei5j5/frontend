@@ -86,31 +86,31 @@ const MessageBubble = ({
       return (
         <div key={`${Math.random()}-${index}`} className="flex flex-wrap mb-2">
           <button
-            onClick={() => handleClickFeelingButton('HAPPY')}
+            onClick={() => handleClickFeelingButton('행복해요')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😍 행복해요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('FUNNY')}
+            onClick={() => handleClickFeelingButton('즐거워요')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😆 즐거워요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('SAD')}
+            onClick={() => handleClickFeelingButton('슬퍼요')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😭 슬퍼요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('ANGRY')}
+            onClick={() => handleClickFeelingButton('화나요')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mr-1 mt-1"
           >
             😤 화나요
           </button>
           <button
-            onClick={() => handleClickFeelingButton('TIRED')}
+            onClick={() => handleClickFeelingButton('피곤해요')}
             className="text-center text-xs bg-v200 py-1.5 px-3 rounded-2xl text-white whitespace-nowrap mt-1"
           >
             😒 피곤해요
@@ -179,12 +179,11 @@ export default function Chat() {
       searchBody.genre !== '' &&
       sendCount === 3
     ) {
-      setIsPending(true);
-
       const getMovieList = async () => {
         axios
           .post(`${API_URL}/api/v1/movie/recommended`, searchBody)
           .then((res) => {
+            setIsPending(true);
             setRecommendedList(res.data.data);
             sendMessage('ai', [
               `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
@@ -196,12 +195,13 @@ export default function Chat() {
           })
           .catch((error) => {
             if (error.response.data.message === '호출 횟수를 초과했습니다') {
+              setIsPending(true);
               sendMessage('ai', ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!']);
             }
           })
           .finally(() => {
             setUserInput('');
-            setIsPending(false);
+            // setIsPending(false);
           });
       };
 
@@ -271,7 +271,6 @@ export default function Chat() {
         ...prev,
         genre: userInput,
       }));
-      setUserInput('');
     }
   }, [sendCount]);
 
@@ -324,7 +323,7 @@ export default function Chat() {
       setIsPending(true);
 
       switch (searchBody.feeling) {
-        case 'HAPPY':
+        case '행복해요':
           setChat((prev) => [
             ...prev,
             {
@@ -333,7 +332,7 @@ export default function Chat() {
             },
           ]);
           break;
-        case 'FUNNY':
+        case '즐거워요':
           setChat((prev) => [
             ...prev,
             {
@@ -342,7 +341,7 @@ export default function Chat() {
             },
           ]);
           break;
-        case 'SAD':
+        case '슬퍼요':
           setChat((prev) => [
             ...prev,
             {
@@ -351,7 +350,7 @@ export default function Chat() {
             },
           ]);
           break;
-        case 'ANGRY':
+        case '화나요':
           setChat((prev) => [
             ...prev,
             {
@@ -360,7 +359,7 @@ export default function Chat() {
             },
           ]);
           break;
-        case 'TIRED':
+        case '피곤해요':
           setChat((prev) => [
             ...prev,
             {
