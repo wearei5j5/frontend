@@ -1,6 +1,5 @@
 'use client';
 
-import { isFirstState } from '@/store/initInfo/atom';
 import Slider from 'react-slick';
 
 import ArrowLeftIcon from '@public/icons/icon-arrow-left.svg';
@@ -29,7 +28,6 @@ import axios from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Info() {
-  const setIsFirst = useSetRecoilState(isFirstState);
   const router = useRouter();
 
   const [slideCount, setSlideCount] = useState([0, 1, 2]);
@@ -91,8 +89,6 @@ export default function Info() {
 
   const handleNextButton = () => {
     if (slideIndex === 2) {
-      setIsFirst(false);
-
       if (localStorage.getItem('access_token')) {
         axios.post(
           `${API_URL}/api/v1/user`,

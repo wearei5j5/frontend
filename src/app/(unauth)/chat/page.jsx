@@ -179,11 +179,13 @@ export default function Chat() {
       searchBody.genre !== '' &&
       sendCount === 3
     ) {
+      setUserInput('');
+      setIsPending(true);
+
       const getMovieList = async () => {
         axios
           .post(`${API_URL}/api/v1/movie/recommended`, searchBody)
           .then((res) => {
-            setIsPending(true);
             setRecommendedList(res.data.data);
             sendMessage('ai', [
               `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
@@ -195,13 +197,8 @@ export default function Chat() {
           })
           .catch((error) => {
             if (error.response.data.message === '호출 횟수를 초과했습니다') {
-              setIsPending(true);
               sendMessage('ai', ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!']);
             }
-          })
-          .finally(() => {
-            setUserInput('');
-            // setIsPending(false);
           });
       };
 

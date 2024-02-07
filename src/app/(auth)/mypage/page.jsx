@@ -126,7 +126,10 @@ export default function Mypage() {
   };
 
   useEffect(() => {
-    if (window.localStorage.getItem('access_token') === null) {
+    if (
+      window.localStorage.getItem('access_token') === null ||
+      window.localStorage.getItem('access_token') === ''
+    ) {
       redirect('/login');
     }
 
