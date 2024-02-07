@@ -13,7 +13,7 @@ export default function Button(props) {
   ) : (
     <div
       onClick={onClick}
-      className={`${bgColor} ${textColor} cursor-pointer text-sm w-full rounded-lg py-3.5 text-center font-medium relative`}
+      className={`${bgColor} ${textColor} ${styleClass} cursor-pointer text-sm w-full rounded-lg py-3.5 text-center font-medium relative`}
     >
       {text}
       {icon}

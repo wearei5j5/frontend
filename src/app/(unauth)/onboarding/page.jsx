@@ -12,14 +12,18 @@ import Button from '@/app/_components/Button';
 import './_styles/slider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userInfoState } from '@/store/userInfo/atom';
+import { useRouter } from 'next/navigation';
+import { isTemporaryState } from '@/store/initInfo/atom';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function OnBoarding() {
   const [showSplash, setShowSplash] = useState(true);
+  const [isTemp, setIsTemp] = useRecoilState(isTemporaryState);
   const userInfo = useRecoilValue(userInfoState);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,6 +45,16 @@ export default function OnBoarding() {
 
   const handleKakaoLogin = () => {
     window.location.href = `${API_URL}/oauth2/code/kakao?state=/info`;
+  };
+
+  const handleClickTemp = () => {
+    setIsTemp(true);
+
+    if (userInfo.name !== '' && userInfo.age !== 0) {
+      router.push('/');
+    } else {
+      router.push('/info');
+    }
   };
 
   return (
@@ -91,8 +105,9 @@ export default function OnBoarding() {
               isLink={false}
             />
             <Button
-              isLink={true}
-              href={userInfo ? '/info' : '/'}
+              isLink={false}
+              onClick={handleClickTemp}
+              // href={userInfo ? '/info' : '/'}
               textColor="text-white"
               bgColor="bg-main"
               text="로그인 없이 사용하기"
