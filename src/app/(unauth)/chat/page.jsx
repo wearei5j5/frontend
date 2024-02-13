@@ -447,8 +447,6 @@ export default function Chat() {
     }
   };
 
-  console.log(chat);
-
   return (
     <>
       <div className="relative flex flex-col h-full">
