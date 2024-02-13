@@ -157,13 +157,25 @@ export default function Chat() {
 
   const sendMessage = (speaker, messages) => {
     setTimeout(() => {
-      setChat((prev) => [
-        ...prev,
-        {
-          speaker,
-          message: messages,
-        },
-      ]);
+      setChat((prev) => {
+        const filtered = prev.filter((item) => !item.message.includes('•••'));
+        if (prev.length !== filtered.length) {
+          return [
+            ...filtered,
+            {
+              speaker,
+              message: messages,
+            },
+          ];
+        }
+        return [
+          ...prev,
+          {
+            speaker,
+            message: messages,
+          },
+        ];
+      });
     }, 1000);
   };
 
@@ -270,6 +282,7 @@ export default function Chat() {
       sendCount === 3
     ) {
       sendMessage('ai', ['•••']);
+
       const getMovieList = async () => {
         setIsPending(true);
 
@@ -278,41 +291,20 @@ export default function Chat() {
           .then((res) => {
             setRecommendedList(res.data.data);
 
-            setChat((prev) => {
-              const filteredChat = prev.filter((item) => !item.message.includes('•••'));
-              if (prev.length !== filteredChat.length) {
-                return [
-                  ...filteredChat,
-                  {
-                    speaker: 'ai',
-                    message: [
-                      `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
-                      '잠시만 기다려주세요!',
-                      '',
-                      `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
-                      'satisfy',
-                    ],
-                  },
-                ];
-              }
-              return filteredChat;
-            });
+            sendMessage('ai', [
+              `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
+              '잠시만 기다려주세요!',
+              '',
+              `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
+              'satisfy',
+            ]);
           })
           .catch((error) => {
-            if (error.response.data.message === '호출 횟수를 초과했습니다') {
-              setChat((prev) => {
-                const filteredChat = prev.filter((item) => !item.message.includes('•••'));
-                if (prev.length !== filteredChat.length) {
-                  return [
-                    ...filteredChat,
-                    {
-                      speaker: 'ai',
-                      message: ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!'],
-                    },
-                  ];
-                }
-                return filteredChat;
-              });
+            if (error.response.status === 400) {
+              sendMessage('ai', ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!']);
+            }
+            if (error.response.status === 500) {
+              sendMessage('ai', ['서버 에러가 발생했습니다.', '대화 종료 후에 다시 시도해주세요!']);
             }
           })
           .finally(() => {
