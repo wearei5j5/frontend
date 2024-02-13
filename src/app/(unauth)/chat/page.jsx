@@ -130,12 +130,10 @@ export default function Chat() {
 
   const [userInput, setUserInput] = useState('');
   const [sendCount, setSendCount] = useState(0);
-
   const [isPending, setIsPending] = useState(true);
-
   const [satisfy, setSatisfy] = useState(null);
-  const [satisfyTrigger, setSatisfyTrigger] = useState(false);
   const [recommendedList, setRecommendedList] = useState([]);
+  const [chat, setChat] = useState([]);
 
   const [searchBody, setSearchBody] = useState({
     ottList: userInfo.ottList,
@@ -157,54 +155,17 @@ export default function Chat() {
     speed: 500,
   };
 
-  const [chat, setChat] = useState([]);
-
-  useEffect(() => {
-    const sendMessage = (speaker, messages) => {
-      setTimeout(() => {
-        setChat((prev) => [
-          ...prev,
-          {
-            speaker,
-            message: messages,
-          },
-        ]);
-      }, 1000);
-    };
-
-    if (
-      searchBody.ottList.length > 0 &&
-      searchBody.feeling !== '' &&
-      searchBody.situation !== '' &&
-      searchBody.genre !== '' &&
-      sendCount === 3
-    ) {
-      setUserInput('');
-      setIsPending(true);
-
-      const getMovieList = async () => {
-        axios
-          .post(`${API_URL}/api/v1/movie/recommended`, searchBody)
-          .then((res) => {
-            setRecommendedList(res.data.data);
-            sendMessage('ai', [
-              `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
-              '잠시만 기다려주세요!',
-              '',
-              `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
-              'satisfy',
-            ]);
-          })
-          .catch((error) => {
-            if (error.response.data.message === '호출 횟수를 초과했습니다') {
-              sendMessage('ai', ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!']);
-            }
-          });
-      };
-
-      getMovieList();
-    }
-  }, [searchBody]);
+  const sendMessage = (speaker, messages) => {
+    setTimeout(() => {
+      setChat((prev) => [
+        ...prev,
+        {
+          speaker,
+          message: messages,
+        },
+      ]);
+    }, 1000);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -233,87 +194,20 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    const sendMessage = (speaker, messages) => {
-      setTimeout(() => {
-        setChat((prev) => [
-          ...prev,
-          {
-            speaker,
-            message: messages,
-          },
-        ]);
-      }, 1000);
-    };
+    if (sendCount !== 3) {
+      const timer = setTimeout(() => {
+        setIsPending(false);
+      }, 2500);
 
-    if (sendCount === 1) {
-      setSearchBody((prev) => ({
-        ...prev,
-        situation: userInput,
-      }));
-      setUserInput('');
-
-      sendMessage('ai', ['그렇다면 지금 기분은 어떠세요?', 'feeling']);
+      return () => clearTimeout(timer);
     }
-
-    if (sendCount === 2) {
-      sendMessage('ai', [
-        `${userInfo.name || '오태'}님, 지금 어떤 장르의 영화를 보고 싶으세요?`,
-        '액션? 로맨스? 스릴러?',
-        ,
-      ]);
-    }
-
-    if (sendCount === 3) {
-      setSearchBody((prev) => ({
-        ...prev,
-        genre: userInput,
-      }));
-    }
-  }, [sendCount]);
+  }, [chat, satisfy]);
 
   useEffect(() => {
-    const sendMessage = (speaker, messages) => {
-      setTimeout(() => {
-        setChat((prev) => [
-          ...prev,
-          {
-            speaker,
-            message: messages,
-          },
-        ]);
-      }, 2000);
-    };
+    if (!messageEndRef.current) return;
 
-    if (satisfy !== null) {
-      axios.post(`${API_URL}/api/v1/review`, { satisfaction: satisfy });
-      setIsPending(true);
-
-      if (satisfy === 'GOOD') {
-        setChat((prev) => [
-          ...prev,
-          {
-            speaker: 'user',
-            message: ['오 괜찮은데?'],
-          },
-        ]);
-
-        sendMessage('ai', [
-          '제가 추천드린 영화가 만족스러우신 것 같아 감격입니다...',
-          '다음에도 또 찾아주세요! ',
-        ]);
-      } else {
-        setChat((prev) => [
-          ...prev,
-          {
-            speaker: 'user',
-            message: ['아..조금 아쉬워..'],
-          },
-        ]);
-
-        sendMessage('ai', ['정말 죄송합니다...', '다음에는 더... 노력해보겠습니다....😭 ']);
-      }
-    }
-  }, [satisfy]);
+    messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [chat, isPending]);
 
   useEffect(() => {
     if (searchBody.feeling !== '' && sendCount === 2) {
@@ -367,28 +261,128 @@ export default function Chat() {
           break;
       }
     }
+
+    if (
+      searchBody.ottList.length > 0 &&
+      searchBody.feeling !== '' &&
+      searchBody.situation !== '' &&
+      searchBody.genre !== '' &&
+      sendCount === 3
+    ) {
+      sendMessage('ai', ['•••']);
+      const getMovieList = async () => {
+        setIsPending(true);
+
+        axios
+          .post(`${API_URL}/api/v1/movie/recommended`, searchBody)
+          .then((res) => {
+            setRecommendedList(res.data.data);
+
+            setChat((prev) => {
+              const filteredChat = prev.filter((item) => !item.message.includes('•••'));
+              if (prev.length !== filteredChat.length) {
+                return [
+                  ...filteredChat,
+                  {
+                    speaker: 'ai',
+                    message: [
+                      `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
+                      '잠시만 기다려주세요!',
+                      '',
+                      `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
+                      'satisfy',
+                    ],
+                  },
+                ];
+              }
+              return filteredChat;
+            });
+          })
+          .catch((error) => {
+            if (error.response.data.message === '호출 횟수를 초과했습니다') {
+              setChat((prev) => {
+                const filteredChat = prev.filter((item) => !item.message.includes('•••'));
+                if (prev.length !== filteredChat.length) {
+                  return [
+                    ...filteredChat,
+                    {
+                      speaker: 'ai',
+                      message: ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!'],
+                    },
+                  ];
+                }
+                return filteredChat;
+              });
+            }
+          })
+          .finally(() => {
+            setIsPending(false);
+          });
+      };
+
+      getMovieList();
+    }
   }, [searchBody]);
 
   useEffect(() => {
-    if (!messageEndRef.current) return;
-
-    messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chat, isPending]);
-
-  const handleClickSatisfyButton = (review) => {
-    if (satisfy === null) {
-      setSatisfy(review);
+    if (sendCount === 1) {
+      setSearchBody((prev) => ({
+        ...prev,
+        situation: userInput,
+      }));
+      setUserInput('');
+      sendMessage('ai', ['그렇다면 지금 기분은 어떠세요?', 'feeling']);
     }
-  };
+
+    if (sendCount === 2) {
+      sendMessage('ai', [
+        `${userInfo.name || '오태'}님, 지금 어떤 장르의 영화를 보고 싶으세요?`,
+        '액션? 로맨스? 스릴러?',
+      ]);
+    }
+
+    if (sendCount === 3) {
+      setSearchBody((prev) => ({
+        ...prev,
+        genre: userInput,
+      }));
+      setUserInput('');
+    }
+  }, [sendCount]);
+
+  useEffect(() => {
+    if (satisfy !== null) {
+      axios.post(`${API_URL}/api/v1/review`, { satisfaction: satisfy });
+      setIsPending(true);
+
+      if (satisfy === 'GOOD') {
+        setChat((prev) => [
+          ...prev,
+          {
+            speaker: 'user',
+            message: ['오 괜찮은데?'],
+          },
+        ]);
+        sendMessage('ai', [
+          '제가 추천드린 영화가 만족스러우신 것 같아 감격입니다...',
+          '다음에도 또 찾아주세요! ',
+        ]);
+      } else {
+        setChat((prev) => [
+          ...prev,
+          {
+            speaker: 'user',
+            message: ['아..조금 아쉬워..'],
+          },
+        ]);
+        sendMessage('ai', ['정말 죄송합니다...', '다음에는 더... 노력해보겠습니다....😭']);
+      }
+    }
+  }, [satisfy]);
 
   const handleClickFeelingButton = (feeling) => {
     setSearchBody((prev) => ({ ...prev, feeling }));
     setSendCount((prev) => prev + 1);
-  };
-
-  const handleModalClose = () => {
-    setOpen(false);
-    setSatisfyTrigger(true);
   };
 
   const handleChangeInput = (e) => {
@@ -411,13 +405,9 @@ export default function Chat() {
     setSendCount((prev) => prev + 1);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsPending(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [chat]);
+  const handleModalClose = () => {
+    setOpen(false);
+  };
 
   const handleClickBookmark = (movieData) => {
     if (movieData.isCollected === false) {
@@ -448,6 +438,16 @@ export default function Chat() {
       setRecommendedList(updatedItem);
     }
   };
+
+  const handleClickSatisfyButton = (review) => {
+    setIsPending(true);
+    setSendCount((prev) => prev + 1);
+    if (satisfy === null) {
+      setSatisfy(review);
+    }
+  };
+
+  console.log(chat);
 
   return (
     <>
