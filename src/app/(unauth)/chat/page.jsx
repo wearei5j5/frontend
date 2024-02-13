@@ -269,6 +269,7 @@ export default function Chat() {
       searchBody.genre !== '' &&
       sendCount === 3
     ) {
+      sendMessage('ai', ['•••']);
       const getMovieList = async () => {
         setIsPending(true);
 
@@ -276,17 +277,42 @@ export default function Chat() {
           .post(`${API_URL}/api/v1/movie/recommended`, searchBody)
           .then((res) => {
             setRecommendedList(res.data.data);
-            sendMessage('ai', [
-              `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
-              '잠시만 기다려주세요!',
-              '',
-              `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
-              'satisfy',
-            ]);
+
+            setChat((prev) => {
+              const filteredChat = prev.filter((item) => !item.message.includes('•••'));
+              if (prev.length !== filteredChat.length) {
+                return [
+                  ...filteredChat,
+                  {
+                    speaker: 'ai',
+                    message: [
+                      `마침 딱 ${userInfo.name || '오태'}님만을 위한 영화가 생각 \n나는군요!`,
+                      '잠시만 기다려주세요!',
+                      '',
+                      `${userInfo.name || '오태'}님만을 위한 이오지오의 추천 영화 어떠신가요?`,
+                      'satisfy',
+                    ],
+                  },
+                ];
+              }
+              return filteredChat;
+            });
           })
           .catch((error) => {
             if (error.response.data.message === '호출 횟수를 초과했습니다') {
-              sendMessage('ai', ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!']);
+              setChat((prev) => {
+                const filteredChat = prev.filter((item) => !item.message.includes('•••'));
+                if (prev.length !== filteredChat.length) {
+                  return [
+                    ...filteredChat,
+                    {
+                      speaker: 'ai',
+                      message: ['추천 횟수 3회를 이미 달성하였습니다.', '다음에 만나요!'],
+                    },
+                  ];
+                }
+                return filteredChat;
+              });
             }
           })
           .finally(() => {
