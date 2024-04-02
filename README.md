@@ -1,8 +1,9 @@
 # 🔮 오때(OTTE)
 
 #### AI 이오지오🤖와의 대화를 통해 유저의 감정, 상황에 꼭 맞는 OTT 작품 추천
-![스크린샷 2024-02-06 오후 10 21 42](https://github.com/otte-i5j5/frontend/assets/84265783/ce8563ed-370f-4475-9c99-62e0d62c3908)
+<br/>
 
+![스크린샷 2024-02-06 오후 10 21 42](https://github.com/otte-i5j5/frontend/assets/84265783/ce8563ed-370f-4475-9c99-62e0d62c3908)
 
 <br/>
 <br/>
@@ -10,8 +11,10 @@
 
 ## ✨프로젝트 소개
 - <a href="https://www.otte-ai.com">오때(Otte) 서비스 바로가기</a><br/>
-- <a href="">팀 노션</a><br/>
+- <a href="https://glow-spaghetti-e19.notion.site/i5j5-84a2c119dbd14dc9b2354c8fd0ab0bc8">팀 노션</a><br/>
 - <a href="https://youtu.be/XPyCf9NS-rk?feature=shared">🏅네이버 클라우드 우수작 시상식 현장스케치</a>
+
+<br/>
 
 #### 💡 해결 하고 싶은 문제 
 - 수많은 OTT 콘텐츠 중 지금 나에게 꼭 맞는 작품을 찾기 어렵다!
