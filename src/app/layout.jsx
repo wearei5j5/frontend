@@ -1,4 +1,5 @@
-import './globals.css';
+import '@/styles/globals.css';
+
 import RecoilRootProvider from '@/util/recoilRootProvider';
 import TanstackProvider from '@/util/tanstackProvider';
 import Script from 'next/script';

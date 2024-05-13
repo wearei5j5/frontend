@@ -4,7 +4,7 @@ import ArrowLeftIcon from '@public/icons/icon-arrow-left.svg';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Modal from '@/app/_components/Modal';
-import RcSlider from '@/app/(unauth)/info/_components/RcSlider';
+import RcSlider from '@/app/_components/RcSlider';
 import Image from 'next/image';
 
 import UserIcon from '@public/icons/icon-user.svg';
@@ -274,7 +274,7 @@ export default function Mypage() {
                 );
               }}
               disabled={tempUserInfo.name === ''}
-              className="mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
+              className="mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-b50 disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
             >
               완료
             </button>
@@ -326,7 +326,7 @@ export default function Mypage() {
                 );
               }}
               disabled={tempUserInfo.age === 0}
-              className="mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
+              className="mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-b50 disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
             >
               완료
             </button>
@@ -394,7 +394,7 @@ export default function Mypage() {
                 );
               }}
               disabled={tempUserInfo.ottList.length === 0}
-              className="mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
+              className="mb-3 w-full bg-main rounded-lg text-white py-3.5 disabled:bg-b50 disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
             >
               완료
             </button>

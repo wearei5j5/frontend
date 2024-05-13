@@ -461,7 +461,7 @@ export default function Chat() {
             <div className="h-full w-full mb-10 flex-1 flex flex-col space-y-1.5 justify-center items-center">
               <Image src="/imgs/chat-character.png" width={140} height={140} alt="character img" />
               <div className="flex items-center">
-                <div className="text-[#656565] text-sm">이오지오</div>
+                <div className="text-g200 text-sm">이오지오</div>
                 <span className="ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block">
                   AI
                 </span>
@@ -475,7 +475,7 @@ export default function Chat() {
               />
             </div>
           ) : (
-            <div className="w-full ">
+            <div className="w-full">
               <div className="w-full flex-1">
                 {chat?.map((item, i) =>
                   item.speaker === 'ai' ? (
@@ -490,7 +490,7 @@ export default function Chat() {
                       </div>
                       <div className="mx-2 flex-1">
                         <div className="flex items-center">
-                          <div className="text-[#656565] text-sm">이오지오</div>
+                          <div className="text-g200 text-sm">이오지오</div>
                           <span className="ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block">
                             AI
                           </span>
@@ -518,7 +518,7 @@ export default function Chat() {
           )}
         </div>
 
-        <footer className="fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px]">
+        <footer className="fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full max-w-layout">
           <div className="relative flex">
             <input
               value={userInput}

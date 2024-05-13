@@ -1,14 +1,13 @@
 'use client';
 
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import ArrowLeftIcon from '@public/icons/icon-arrow-left.svg';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import './_styles/style.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -21,7 +20,7 @@ import WavveIcon from '@public/icons/icon-wavve.svg';
 import AppleTvIcon from '@public/icons/icon-apple-tv.svg';
 import SeeznIcon from '@public/icons/icon-seezn.svg';
 
-import RcSlider from './_components/RcSlider';
+import RcSlider from '@/app/_components/RcSlider';
 import { userInfoState } from '@/store/userInfo/atom';
 import axios from 'axios';
 
@@ -164,11 +163,9 @@ export default function Info() {
       <div className="h-[calc(100%-64px)]">
         <div className="flex space-x-0.5">
           {slideCount.map((item, i) => (
-            <div key={i} className="w-full bg-[#E2E2E2] rounded-full sm:h-2 h-1.5 mb-4">
+            <div key={i} className="w-full bg-g50 rounded-full sm:h-2 h-1.5 mb-4">
               <div
-                className={`sm:h-2 h-1.5 rounded-full ${
-                  item <= slideIndex ? 'bg-main' : 'bg-[#E2E2E2]'
-                }`}
+                className={`sm:h-2 h-1.5 rounded-full ${item <= slideIndex ? 'bg-main' : 'bg-g50'}`}
               ></div>
             </div>
           ))}
@@ -228,7 +225,7 @@ export default function Info() {
           </Slider>
           <div className="px-5 sm:px-6 my-3">
             <button
-              className="w-full bg-main rounded-lg text-white py-3.5 disabled:bg-light-gray disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
+              className="w-full bg-main rounded-lg text-white py-3.5 disabled:bg-b50 disabled:cursor-not-allowed disabled:opacity-50 disabled:text-b300"
               onClick={handleNextButton}
               disabled={
                 (slideIndex === 0 && userInfo.name === '') ||

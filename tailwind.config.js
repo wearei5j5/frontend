@@ -7,9 +7,6 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    minWidth: {
-      600: '600px',
-    },
     extend: {
       colors: {
         main: '#501EE0',
@@ -27,13 +24,25 @@ module.exports = {
         v300: '#501EE0',
         v400: '#38159D',
         v500: '#311289',
-        'light-gray': '#F5F5F5',
+        b50: '#F5F5F5',
         b100: '#EFEFEF',
+        b200: '#DFDFDF',
         b300: '#C8C8C8',
+        b400: '#BFBFBF',
+        kakao: '#FEE500',
+      },
+      minWidth: {
+        layout: 'var(--min-layout-size)',
+      },
+      maxWidth: {
+        layout: 'var(--min-layout-size)',
+      },
+      width: {
+        layout: 'var(--min-layout-size)',
       },
       boxShadow: {
         square: '0 4px 12px rgba(0,0,0,0.1)',
-        line: 'inset 0 0 0 2px #6E44E5, 0 4px 10px rgba(0,0,0,0.1)',
+        line: `inset 0 0 0 2px #6E44E5, 0 4px 10px rgba(0,0,0,0.1)`,
         poster: '0px 30px 50px 0px rgba(0, 0, 0, 0.50)',
         mypage: '0px 0px 20px 0px rgba(0, 0, 0, 0.15);',
         more: '0px 0px 10px 0px rgba(0, 0, 0, 0.10);',
@@ -43,8 +52,7 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'home-background': "url('../public/bg-home.png')",
       },
       backgroundPosition: {

@@ -70,7 +70,7 @@ export default function Home() {
       (showSplash ? (
         <SplashScreen />
       ) : (
-        <div>
+        <div className="h-full">
           <div className="h-16 w-full py-2 px-5 flex items-center justify-between">
             <Link href="/">
               <Logo width="64" height="100%" className="cursor-pointer" />
@@ -95,7 +95,7 @@ export default function Home() {
               </div>
 
               <div
-                className="border-w border-main bg-cover bg-center bg-no-repeat w-full h-64 sm:h-96 sm:bg-contain flex justify-center"
+                className="border-w border-main bg-cover bg-center bg-no-repeat w-full h-64 sm:bg-contain flex justify-center"
                 style={{
                   backgroundImage: 'url("/imgs/bg-home.png")',
                 }}
