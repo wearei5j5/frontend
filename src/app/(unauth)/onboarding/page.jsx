@@ -2,15 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Slider from 'react-slick';
 import Link from 'next/link';
 import SplashScreen from '@/app/_components/SplashScreen';
 import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 
 import Button from '@/app/_components/Button';
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userInfoState } from '@/store/userInfo/atom';
 import { useRouter } from 'next/navigation';
