@@ -12,7 +12,6 @@ import Modal from '@/app/_components/Modal';
 
 import { modalState } from '@/store/modal/atom';
 dayjs.locale('ko');
-import './_style/style.css';
 import { useQuery } from '@tanstack/react-query';
 
 import axios from 'axios';
@@ -514,7 +513,7 @@ export default function Chat() {
           )}
         </div>
 
-        <footer className="fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full max-w-layout">
+        <footer className="fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full sm:w-layout">
           <div className="relative flex">
             <input
               value={userInput}

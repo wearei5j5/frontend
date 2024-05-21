@@ -1,12 +1,16 @@
-.slick-list {
+.recommendSlider {
+  height: 100%;
+}
+
+.recommendSlider :global .slick-list {
   height: 100% !important;
 }
 
-.slick-track {
+.recommendSlider :global .slick-track {
   height: 100% !important;
 }
 
-.slick-slide {
+.recommendSlider :global .slick-slide {
   opacity: 0.6 !important;
 
   -moz-transform: translateY(16px);
@@ -16,20 +20,20 @@
   transform: translateY(16px);
 }
 
-.slick-slide > div {
+.recommendSlider :global .slick-slide > div {
   height: 100% !important;
 }
 
-.slick-track {
+.recommendSlider :global .slick-track {
   display: flex;
   align-items: flex-end;
 }
 
-.slick-arrow {
+.recommendSlider :global .slick-arrow {
   display: none !important;
 }
 
-.slick-center {
+.recommendSlider :global .slick-center {
   -moz-transform: scale(1.08);
   -ms-transform: scale(1.08);
   -o-transform: scale(1.08);

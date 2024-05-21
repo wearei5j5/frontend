@@ -4,6 +4,8 @@ import Image from 'next/image';
 import BookmarkIcon from '@public/icons/icon-bookmark.svg';
 import BookmarkFullIcon from '@public/icons/icon-bookmark-full.svg';
 
+import style from '@/styles/recommendSlider.module.css';
+
 export default function RecommendSlider({ recommendedList, handleClickBookmark }) {
   const settings = {
     className: 'center',
@@ -15,7 +17,7 @@ export default function RecommendSlider({ recommendedList, handleClickBookmark }
   };
 
   return (
-    <Slider {...settings} className="h-full">
+    <Slider {...settings} className={style.recommendSlider}>
       {recommendedList?.map((movie, idx) => (
         <div
           key={idx}
