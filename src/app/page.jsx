@@ -17,7 +17,7 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const [welcomeText, setWelcomeText] = useState('반가워요 저는 이오지오에요');
   const [isLogin, setIsLogin] = useState(null);
-  const isTemp = useRecoilValue(isTemporaryState);
+  const isTemporary = useRecoilValue(isTemporaryState);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,10 +40,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (!isLogin && !isTemp) {
+    if (!isLogin && !isTemporary) {
       router.push('/onboarding');
     }
-  }, [isLogin, isTemp, router]);
+  }, [isLogin, isTemporary, router]);
 
   useEffect(() => {
     const toggleText = () => {
@@ -58,9 +58,6 @@ export default function Home() {
 
     return () => clearInterval(intervalEvent);
   }, []);
-
-  console.log('isLogin', isLogin);
-  console.log('isTemp', isTemp);
 
   return showSplash ? (
     <SplashScreen />
