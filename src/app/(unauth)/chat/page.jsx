@@ -12,12 +12,10 @@ import Modal from '@/app/_components/Modal';
 
 import { modalState } from '@/store/modal/atom';
 dayjs.locale('ko');
-import { useQuery } from '@tanstack/react-query';
 
 import axios from 'axios';
 import RecommendSlider from '@/app/_components/RecommendSlider';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from '@/constants/common';
 
 const MessageBubble = ({
   speaker,

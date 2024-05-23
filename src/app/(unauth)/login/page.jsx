@@ -5,8 +5,7 @@ import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 import Image from 'next/image';
 import Button from '@/app/_components/Button';
 import Link from 'next/link';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from '@/constants/common';
 
 export default function Login() {
   const handleKakaoLogin = () => {
