@@ -2,7 +2,7 @@ export default function Modal(props) {
   return (
     <>
       <div
-        className={`${props.bg} modal fixed w-full top-0 sm:max-w-[600px] flex-1  h-full left-1/2 flex item s-center justify-center z-20 -translate-x-1/2`}
+        className={`${props.bg} modal fixed w-full top-0 sm:max-w-layout flex-1  h-full left-1/2 flex item s-center justify-center z-20 -translate-x-1/2`}
       >
         <div className={`modal-overlay absolute w-full h-full ${props.bg}`}></div>
 

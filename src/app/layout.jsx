@@ -1,6 +1,6 @@
-import './globals.css';
-import RecoilRootProvider from '@/util/recoilRootProvider';
-import TanstackProvider from '@/util/tanstackProvider';
+import '@/styles/globals.css';
+
+import RecoilRootProvider from '@/providers/RecoilRootProvider';
 import Script from 'next/script';
 import { GoogleTagManager } from '@next/third-parties/google';
 
@@ -44,9 +44,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body suppressHydrationWarning={true}>
-        <RecoilRootProvider>
-          <TanstackProvider>{children}</TanstackProvider>
-        </RecoilRootProvider>
+        <RecoilRootProvider>{children}</RecoilRootProvider>
       </body>
       <GoogleTagManager gtmId={GTM_CODE} />
     </html>

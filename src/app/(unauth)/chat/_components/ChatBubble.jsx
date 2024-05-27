@@ -8,7 +8,7 @@ export default function ChatBubble(props) {
         ${
           props.sender === 'ai'
             ? 'border-main border-solid border-1 text-g300 rounded-r-xl rounded-bl-xl rounded-tl-sm'
-            : 'bg-main text-white rounded-l-xl rounded-br-xl rounded-tr-sm min-w-full ml-12'
+            : 'bg-main text-white rounded-l-xl rounded-br-xl rounded-tr-sm ml-12'
         }`}
       >
         {props.children ? (

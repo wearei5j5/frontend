@@ -11,18 +11,11 @@ import { userInfoState } from '@/store/userInfo/atom';
 import Modal from '@/app/_components/Modal';
 
 import { modalState } from '@/store/modal/atom';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 dayjs.locale('ko');
-import './_style/style.css';
-import { useQuery } from '@tanstack/react-query';
 
-import BookmarkIcon from '@public/icons/icon-bookmark.svg';
-import BookmarkFullIcon from '@public/icons/icon-bookmark-full.svg';
 import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import RecommendSlider from '@/app/_components/RecommendSlider';
+import { API_URL } from '@/constants/common';
 
 const MessageBubble = ({
   speaker,
@@ -145,15 +138,6 @@ export default function Chat() {
   const messageEndRef = useRef(null);
 
   const today = dayjs(new Date()).format('YYYY년 MM월 DD일 (dd)');
-
-  const settings = {
-    className: 'center',
-    centerMode: true,
-    infinite: true,
-    centerPadding: '40px',
-    slidesToShow: 1,
-    speed: 500,
-  };
 
   const sendMessage = (speaker, messages) => {
     setTimeout(() => {
@@ -461,7 +445,7 @@ export default function Chat() {
             <div className="h-full w-full mb-10 flex-1 flex flex-col space-y-1.5 justify-center items-center">
               <Image src="/imgs/chat-character.png" width={140} height={140} alt="character img" />
               <div className="flex items-center">
-                <div className="text-[#656565] text-sm">이오지오</div>
+                <div className="text-g200 text-sm">이오지오</div>
                 <span className="ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block">
                   AI
                 </span>
@@ -475,7 +459,7 @@ export default function Chat() {
               />
             </div>
           ) : (
-            <div className="w-full ">
+            <div className="w-full">
               <div className="w-full flex-1">
                 {chat?.map((item, i) =>
                   item.speaker === 'ai' ? (
@@ -490,7 +474,7 @@ export default function Chat() {
                       </div>
                       <div className="mx-2 flex-1">
                         <div className="flex items-center">
-                          <div className="text-[#656565] text-sm">이오지오</div>
+                          <div className="text-g200 text-sm">이오지오</div>
                           <span className="ml-2 bg-main rounded-lg py-0.5 px-1.5 text-xs text-white display-block">
                             AI
                           </span>
@@ -518,7 +502,7 @@ export default function Chat() {
           )}
         </div>
 
-        <footer className="fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px]">
+        <footer className="fixed h-16 py-2 px-5 bg-white bottom-0 left-1/2 -translate-x-1/2 w-full sm:w-layout">
           <div className="relative flex">
             <input
               value={userInput}
@@ -562,71 +546,10 @@ export default function Chat() {
             </div>
             <div className="h-[calc(100%-50px)] flex flex-col justify-between">
               <div className="grow">
-                <Slider {...settings} className="h-full">
-                  {recommendedList?.map((movie, idx) => (
-                    <div
-                      key={idx}
-                      className="w-full h-full flex flex-col justify-center items-center text-center"
-                    >
-                      <div className="h-3/4 px-5 pb-5">
-                        <div className="h-full relative shadow-poster rounded-lg overflow-hidden">
-                          {movie.posterImageUrl === null ? (
-                            <div className="flex flex-col justify-center items-center h-full">
-                              <div className="relative  w-[158px] h-[135px]">
-                                <Image
-                                  src="/imgs/null-character.png"
-                                  className="w-full grow object-cover"
-                                  fill
-                                  alt="movie poster null img"
-                                />
-                              </div>
-                              <div className="text-xl mb-2 font-semibold text-v75">Sorry💦</div>
-                              <div className="text-sm text-v75">
-                                영화 이미지를 불러오지 못했어요!
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="relative h-full">
-                              <Image
-                                src={movie.posterImageUrl}
-                                className="w-full h-full object-cover"
-                                fill
-                                alt="movie poster img"
-                              />
-                              {localStorage.getItem('access_token') && (
-                                <div
-                                  className="absolute top-3.5 right-3.5 cursor-pointer"
-                                  onClick={() => handleClickBookmark(movie)}
-                                >
-                                  {movie.isCollected ? <BookmarkFullIcon /> : <BookmarkIcon />}
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-lg text-white font-bold mb-0.5">{movie.movieName}</div>
-                        <div className="text-g100 mb-1 text-xs">
-                          {movie.releaseDate !== null && movie.releaseDate.split('-')[0]}
-                        </div>
-                        <div className="flex justify-center items-center flex-wrap space-x-1">
-                          {movie.keywords.map(
-                            (keyword, i) =>
-                              keyword.length !== 0 && (
-                                <div
-                                  key={i}
-                                  className="border-1 text-sm text-v50 py-1.5 px-3 border-v50 rounded-3xl mb-1"
-                                >
-                                  {keyword}
-                                </div>
-                              ),
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </Slider>
+                <RecommendSlider
+                  recommendedList={recommendedList}
+                  handleClickBookmark={handleClickBookmark}
+                />
               </div>
               <div className="px-4 pb-4">
                 <div
