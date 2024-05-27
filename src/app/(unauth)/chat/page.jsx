@@ -139,15 +139,6 @@ export default function Chat() {
 
   const today = dayjs(new Date()).format('YYYY년 MM월 DD일 (dd)');
 
-  const settings = {
-    className: 'center',
-    centerMode: true,
-    infinite: true,
-    centerPadding: '40px',
-    slidesToShow: 1,
-    speed: 500,
-  };
-
   const sendMessage = (speaker, messages) => {
     setTimeout(() => {
       setChat((prev) => {

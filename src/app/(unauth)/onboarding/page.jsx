@@ -1,24 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import SplashScreen from '@/app/_components/SplashScreen';
 import KakaoIcon from '@public/icons/icon-kakaotalk.svg';
 
 import Button from '@/app/_components/Button';
-
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userInfoState } from '@/store/userInfo/atom';
-import { useRouter } from 'next/navigation';
-import { isTemporaryState } from '@/store/initInfo/atom';
 import OnbaordingSlider from '@/app/_components/OnboardingSlider';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { userInfoState } from '@/store/userInfo/atom';
+import { isTemporaryState } from '@/store/initInfo/atom';
+import { API_URL } from '@/constants/common';
 
 export default function Onboarding() {
   const [showSplash, setShowSplash] = useState(true);
-  const [isTemp, setIsTemp] = useRecoilState(isTemporaryState);
+  const setIsTemporary = useSetRecoilState(isTemporaryState);
   const userInfo = useRecoilValue(userInfoState);
   const router = useRouter();
 
@@ -30,22 +27,14 @@ export default function Onboarding() {
     return () => clearTimeout(timer);
   }, []);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    dotsClass: 'dots-custom',
-  };
-
   const handleKakaoLogin = () => {
-    window.location.href = `${API_URL}/oauth2/code/kakao?state=/info`;
+    window.location.href = `${API_URL}/oauth2/code/kakao?state=${
+      userInfo.name === '' ? '/info' : '/'
+    }`;
   };
 
   const handleClickTemp = () => {
-    setIsTemp(true);
+    setIsTemporary(true);
 
     if (userInfo.name !== '' && userInfo.age !== 0) {
       router.push('/');
@@ -94,7 +83,6 @@ export default function Onboarding() {
             <Button
               isLink={false}
               onClick={handleClickTemp}
-              // href={userInfo ? '/info' : '/'}
               textColor="text-white"
               bgColor="bg-main"
               text="로그인 없이 사용하기"

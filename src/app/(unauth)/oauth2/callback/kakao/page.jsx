@@ -1,20 +1,17 @@
 'use client';
 
 import axios from 'axios';
+import { useRecoilValue } from 'recoil';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import SplashScreen from '@/app/_components/SplashScreen';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userInfoState } from '@/store/userInfo/atom';
-import { isTemporaryState } from '@/store/initInfo/atom';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from '@/constants/common';
 
 export default function KakaoLogin() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const userInfo = useRecoilValue(userInfoState);
-  const isTemp = useRecoilValue(isTemporaryState);
 
   const code = searchParams.get('code');
   const provider = searchParams.get('provider');
