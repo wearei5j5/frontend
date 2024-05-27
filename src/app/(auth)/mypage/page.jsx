@@ -1,7 +1,7 @@
 'use client';
 
 import ArrowLeftIcon from '@public/icons/icon-arrow-left.svg';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Modal from '@/app/_components/Modal';
 import RcSlider from '@/app/_components/RcSlider';
@@ -9,19 +9,12 @@ import Image from 'next/image';
 
 import UserIcon from '@public/icons/icon-user.svg';
 import CloseIcon from '@public/icons/icon-close.svg';
-// import NetflixIcon from '@public/icons/icon-netflix.svg';
-// import TvingIcon from '@public/icons/icon-tving.svg';
-// import DisneyPlusIcon from '@public/icons/icon-disney-plus.svg';
-// import CoupangPlayIcon from '@public/icons/icon-coupang-play.svg';
-// import WatchaIcon from '@public/icons/icon-watcha.svg';
-// import WavveIcon from '@public/icons/icon-wavve.svg';
-// import AppleTvIcon from '@public/icons/icon-apple-tv.svg';
-// import SeeznIcon from '@public/icons/icon-seezn.svg';
+
 import axios from 'axios';
 import { userInfoState } from '@/store/userInfo/atom';
 import { useRecoilState } from 'recoil';
 import { ACCESS_TOKEN_STR, API_URL } from '@/constants/common';
-import axiosInstance from '@/util/instance';
+
 import TextGroup from '@/app/_components/TextGroup';
 import OttService from '@/app/_components/OttService';
 import Button from '@/app/_components/Button';
@@ -134,11 +127,9 @@ export default function Mypage() {
 
   useEffect(() => {
     if (
-      localStorage.getItem(ACCESS_TOKEN_STR) === null ||
-      localStorage.getItem(ACCESS_TOKEN_STR) === ''
+      localStorage.getItem(ACCESS_TOKEN_STR) !== null &&
+      localStorage.getItem(ACCESS_TOKEN_STR) !== ''
     ) {
-      redirect('/login');
-    } else {
       axios
         .get(`${API_URL}/api/v1/movie`, {
           headers: {
@@ -161,7 +152,7 @@ export default function Mypage() {
   }, []);
 
   return (
-    <div>
+    <div className="h-full">
       <header className="px-4 py-2 sm:px-5 flex items-center">
         <ArrowLeftIcon className="cursor-pointer" onClick={() => router.push('/')} />
         <div className="ml-1 text-lg font-bold">My page</div>
@@ -179,7 +170,7 @@ export default function Mypage() {
               />
             )}
           </div>
-          <div className="text-lg text-g400 font-semibold mt-1">{userInfo?.name}님</div>
+          <div className="text-lg text-g400 font-semibold mt-1">{userInfo.name}님</div>
           <div className="text-sm text-g75">{userInfo.age}세</div>
           <div className="flex space-x-2 w-full text-center mt-5">
             <div
